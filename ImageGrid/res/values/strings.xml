@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">ImageGrid</string>
+	<string name="showAssets">Show assets</string>
+	<string name="parsing_exception">Invalid response format</string>
+	<string name="http_exception">Check your internet connection and try again
+	</string>
+	<string name="http_error">Server Problem, Try again</string>
+
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="save">Save</string>
+    <string name="app_name">Comments</string>
+    <string name="toast_comment_added">Comment added!</string>
+    <string name="toast_enter_comment">Enter comment</string>
+    <string name="start_comments">Start Comments</string>
+
+</resources>

@@ -1,16 +1,16 @@
-package com.chute.android.gcchutelisting.app;
+package com.chute.android.imagegrid.app;
 
-import com.chute.android.gcchutelisting.R;
+import com.chute.android.imagegrid.R;
 import com.darko.imagedownloader.ImageLoader;
 
 import android.app.Application;
 import android.content.Context;
 import android.util.TypedValue;
 
-public class GCChuteListingApp extends Application {
+public class ImageGridApp extends Application {
 
 	@SuppressWarnings("unused")
-	private static final String TAG = GCChuteListingApp.class.getSimpleName();
+	private static final String TAG = ImageGridApp.class.getSimpleName();
 
 	private static ImageLoader createImageLoader(Context context) {
 		ImageLoader imageLoader = new ImageLoader(context, R.drawable.icon);
@@ -35,4 +35,5 @@ public class GCChuteListingApp extends Application {
 		}
 		return super.getSystemService(name);
 	}
+
 }

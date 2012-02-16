@@ -1,16 +1,16 @@
-package com.chute.android.gcchutelisting.app;
-
-import com.chute.android.gcchutelisting.R;
-import com.darko.imagedownloader.ImageLoader;
+package com.chute.android.comments.app;
 
 import android.app.Application;
 import android.content.Context;
 import android.util.TypedValue;
 
-public class GCChuteListingApp extends Application {
+import com.chute.android.comments.R;
+import com.darko.imagedownloader.ImageLoader;
+
+public class CommentsApp extends Application {
 
 	@SuppressWarnings("unused")
-	private static final String TAG = GCChuteListingApp.class.getSimpleName();
+	private static final String TAG = CommentsApp.class.getSimpleName();
 
 	private static ImageLoader createImageLoader(Context context) {
 		ImageLoader imageLoader = new ImageLoader(context, R.drawable.icon);
@@ -25,7 +25,7 @@ public class GCChuteListingApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mImageLoader = createImageLoader(getApplicationContext());
+		mImageLoader = createImageLoader(this);
 	}
 
 	@Override
@@ -35,4 +35,5 @@ public class GCChuteListingApp extends Application {
 		}
 		return super.getSystemService(name);
 	}
+
 }

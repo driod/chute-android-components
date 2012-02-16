@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>GCComments</name>
+	<name>GCMultiImagePicker</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -32,14 +32,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>comment.png</name>
+			<name>selectPhotos.png</name>
 			<type>1</type>
-			<location>/home/ola/Desktop/comment.png</location>
+			<location>/home/ola/Desktop/selectPhotos.png</location>
 		</link>
 		<link>
-			<name>startComments.png</name>
+			<name>selectedPhotos.png</name>
 			<type>1</type>
-			<location>/home/ola/Desktop/startComments.png</location>
+			<location>/home/ola/Desktop/selectedPhotos.png</location>
 		</link>
 	</linkedResources>
 </projectDescription>

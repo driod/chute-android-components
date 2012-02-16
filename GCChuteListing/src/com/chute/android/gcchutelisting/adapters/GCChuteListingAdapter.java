@@ -25,7 +25,7 @@ public class GCChuteListingAdapter extends BaseAdapter {
     public GCChuteListingAdapter(Activity context, final GCChuteCollection chuteCollection) {
 	this.chuteCollection = chuteCollection;
 	inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	loader = ImageLoader.get(context);
+	loader = ImageLoader.getLoader(context);
     }
 
     @Override

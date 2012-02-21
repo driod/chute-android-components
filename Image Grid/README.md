@@ -4,7 +4,7 @@ Introduction
 
 Image Grid is a component made for developers to easily integrate it inside their app and enable photo browsing functionality. This component gets the assets from a specific chute and displays it in a grid.  
 
-![IMG_GCMultiImagePicker1](https://github.com/chute/Chute-Android-Kitchen-Sink/raw/master/Components/Multi-Image%20Picker/screenshots/IMG_GCMultiImagePicker1.png)
+![image1](https://github.com/chute/chute-android-components/raw/master/Image%20Grid/screenshots/1.png)
 
 Implementation
 ====

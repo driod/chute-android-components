@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, GCShareViewActivity!</string>
+    <string name="app_name">GCShareView</string>
+    <string name="start_share_view">Start Share View</string>
+    <string name="share_photo">Share This Photo</string>
+    <string name="share_email">Share via Email</string>
+    <string name="share_facebook">Share via Facebook</string>
+    <string name="share_twitter">Share via Twiter</string>
+    <string name="share_email_body"> Hi, \n\n I\'d like to share this photo from my
+        \"%1$s\" Roll.\n\n See the full size version here:\n %2$s \n\n
+        Thanks!</string>
+  <string name="share_email_intent_chooser_title">Choose Email app</string>
+</resources>

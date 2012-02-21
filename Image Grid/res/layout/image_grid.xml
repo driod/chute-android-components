@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black"
+    android:orientation="vertical" >
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/transparent"
+        android:columnWidth="3dip"
+        android:fadingEdgeLength="0dip"
+        android:fastScrollEnabled="true"
+        android:horizontalSpacing="5dip"
+        android:numColumns="3"
+        android:paddingBottom="5dip"
+        android:paddingLeft="1dip"
+        android:paddingRight="1dip"
+        android:paddingTop="10dip"
+        android:verticalSpacing="5dip" />
+
+</LinearLayout>

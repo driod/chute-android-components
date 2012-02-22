@@ -3,7 +3,6 @@ package com.chute.android.socialgallery.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -15,11 +14,11 @@ import com.chute.android.gallery.components.GalleryViewFlipper;
 import com.chute.android.gcshareview.intent.ShareActivityIntentWrapper;
 import com.chute.android.socialgallery.R;
 import com.chute.android.socialgallery.util.Constants;
+import com.chute.android.socialgallery.util.intent.SocialGalleryActivityIntentWrapper;
 import com.chute.android.socialgallery.util.view.HeartCheckbox;
 import com.chute.sdk.api.GCHttpCallback;
 import com.chute.sdk.api.chute.GCChutes;
 import com.chute.sdk.collections.GCAssetCollection;
-import com.chute.sdk.model.GCAssetModel;
 import com.chute.sdk.model.GCHttpRequestParameters;
 
 public class SocialGalleryActivity extends Activity {
@@ -28,12 +27,15 @@ public class SocialGalleryActivity extends Activity {
 	private ImageButton share;
 	private HeartCheckbox heart;
 	private GalleryViewFlipper gallery;
+	private SocialGalleryActivityIntentWrapper socialWrapper;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.social_gallery_activity);
+		
+		socialWrapper = new SocialGalleryActivityIntentWrapper(getIntent());
 
 		gallery = (GalleryViewFlipper) findViewById(R.id.galleryId);
 		comments = (ImageButton) findViewById(R.id.btnComment);
@@ -80,9 +82,9 @@ public class SocialGalleryActivity extends Activity {
 		public void onClick(View v) {
 			PhotoCommentsActivityIntentWrapper wrapper = new PhotoCommentsActivityIntentWrapper(
 					SocialGalleryActivity.this);
-			wrapper.setChuteId(Constants.CHUTE_ID);
-			wrapper.setAssetId("1235");
-			wrapper.setChuteName(Constants.CHUTE_NAME);
+			wrapper.setChuteId(socialWrapper.getChuteId());
+			wrapper.setAssetId(socialWrapper.getAssetId());
+			wrapper.setChuteName(socialWrapper.getChuteName());
 			wrapper.startActivityForResult(SocialGalleryActivity.this,
 					Constants.ACTIVITY_FOR_RESULT_KEY);
 		}
@@ -95,9 +97,9 @@ public class SocialGalleryActivity extends Activity {
 		public void onClick(View v) {
 			ShareActivityIntentWrapper wrapper = new ShareActivityIntentWrapper(
 					SocialGalleryActivity.this);
-			wrapper.setChuteId(Constants.CHUTE_ID);
-			wrapper.setChuteName(Constants.CHUTE_NAME);
-			wrapper.setChuteShortcut(Constants.CHUTE_SHORTCUT);
+			wrapper.setChuteId(socialWrapper.getChuteId());
+			wrapper.setChuteName(socialWrapper.getChuteName());
+			wrapper.setChuteShortcut(socialWrapper.getChuteShortcut());
 			wrapper.startActivity(SocialGalleryActivity.this);
 		}
 

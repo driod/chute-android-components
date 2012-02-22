@@ -9,7 +9,7 @@ This component includes Chute SDK library and is targeted towards android develo
 Implementation
 ====
 
-Follow the Image Sharer Tutorial which can be found and downloaded at [https://github.com/chute/chute-tutorials/tree/master/Android/Multi-Image%20Sharer%20Tutorial] (https://github.com/chute/chute-tutorials/tree/master/Android/Multi-Image%20Sharer%20Tutorial) on how to setup and use the component.
+Follow the Image Sharer Tutorial which can be found and downloaded at [https://github.com/chute/chute-tutorials/tree/master/Android/Image%20Sharer%20Tutorial] (https://github.com/chute/chute-tutorials/tree/master/Android/Image%20Sharer%20Tutorial) on how to setup and use the component.
 
 Modifying the component
 ====

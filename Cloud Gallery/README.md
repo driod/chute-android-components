@@ -10,5 +10,5 @@ Cloud Gallery is a component made for developers to easily integrate it inside t
 Implementation
 ====
 
-Follow the Cloud Gallery Tutorial which can be found and downloaded at [https://github.com/chute/chute-tutorials/tree/master/Android/Multi-Image%20Picker%20Tutorial] (https://github.com/chute/chute-tutorials/tree/master/Android/Multi-Image%20Picker%20Tutorial) on how to setup and use the component.
+Follow the Cloud Gallery Tutorial which can be found and downloaded at [https://github.com/chute/chute-tutorials/tree/master/Android/CloudGalleryTutorial] (https://github.com/chute/chute-tutorials/tree/master/Android/CloudGalleryTutorial) on how to setup and use the component.
 

@@ -3,13 +3,14 @@ package com.chute.android.socialgallery.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.chute.android.comments.util.intent.CommentsActivityIntentWrapper;
 import com.chute.android.comments.util.intent.MainActivityIntentWrapper;
+import com.chute.android.comments.util.intent.PhotoCommentsActivityIntentWrapper;
 import com.chute.android.gallery.components.GalleryViewFlipper;
 import com.chute.android.gcshareview.intent.ShareActivityIntentWrapper;
 import com.chute.android.socialgallery.R;
@@ -53,13 +54,6 @@ public class SocialGalleryActivity extends Activity {
 		@Override
 		public void onSuccess(GCAssetCollection responseData) {
 			gallery.setAssetCollection(responseData);
-			for (int i=0; i<responseData.size(); i++) {
-				GCAssetModel asset = new GCAssetModel();
-				asset.setId(responseData.get(i).getId());
-				CommentsActivityIntentWrapper wrapper = new CommentsActivityIntentWrapper(SocialGalleryActivity.this);
-				wrapper.setAssetId(asset.getId());
-				
-			}
 		}
 
 		@Override
@@ -79,15 +73,15 @@ public class SocialGalleryActivity extends Activity {
 		}
 
 	}
-
-	private final class CommentsClickListener implements OnClickListener {
+	
+    final class CommentsClickListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
-			CommentsActivityIntentWrapper wrapper = new CommentsActivityIntentWrapper(
+			PhotoCommentsActivityIntentWrapper wrapper = new PhotoCommentsActivityIntentWrapper(
 					SocialGalleryActivity.this);
 			wrapper.setChuteId(Constants.CHUTE_ID);
-			wrapper.setAssetId(Constants.ASSET_ID);
+			wrapper.setAssetId("1235");
 			wrapper.setChuteName(Constants.CHUTE_NAME);
 			wrapper.startActivityForResult(SocialGalleryActivity.this,
 					Constants.ACTIVITY_FOR_RESULT_KEY);

@@ -139,5 +139,5 @@ public class GalleryViewFlipper extends ViewFlipper {
 	    this.getChildAt(i).destroyView();
 	}
     }
-
+    
 }

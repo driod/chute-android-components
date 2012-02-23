@@ -6,6 +6,8 @@ Image Sharer is a component made for developers to easily integrate it inside th
 Chute represents a container for assets. Asset represents any photo managed by Chute.
 This component includes Chute SDK library and is targeted towards android developers who want to make their applications social. 
 
+![image1](https://github.com/chute/chute-android-components/raw/master/Image%20Sharer/screenshots/1.png)
+
 Implementation
 ====
 

@@ -43,9 +43,8 @@ public class SocialGalleryActivity extends Activity {
 		share = (ImageButton) findViewById(R.id.btnShare);
 		share.setOnClickListener(new ShareClickListener());
 		heart = (HeartCheckbox) findViewById(R.id.btnHeart);
-		heart.setOnClickListener(new HeartClickListener());
 
-		GCChutes.Resources.assets(getApplicationContext(), Constants.CHUTE_ID,
+		GCChutes.Resources.assets(getApplicationContext(), socialWrapper.getChuteId(),
 				new AssetCollectionCallback()).executeAsync();
 
 	}
@@ -105,14 +104,6 @@ public class SocialGalleryActivity extends Activity {
 
 	}
 
-	private final class HeartClickListener implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			heart.markHeartByAssetId(Constants.ASSET_ID);
-		}
-
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

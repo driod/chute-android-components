@@ -1,47 +1,44 @@
 package com.chute.android.gallery.components;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.ViewFlipper;
 
-import com.chute.android.gallery.R;
+import com.chute.android.gallery.util.GalleryThreadPoolExecutor;
 import com.chute.android.gallery.zoom.ImageZoomView;
 import com.chute.android.gallery.zoom.PinchZoomListener.GestureEvent;
 import com.chute.android.gallery.zoom.PinchZoomListener.OnMotionEventListener;
 import com.chute.sdk.collections.GCAssetCollection;
+import com.chute.sdk.model.GCAssetModel;
 import com.chute.sdk.utils.GCUtils;
-import com.darko.imagedownloader.ImageLoader;
 
 /**
  * @author DArkO.Grozdanovski
  * 
  */
-public class GalleryViewFlipper extends ViewFlipper {
+public class GalleryViewFlipper extends AnimatedSwitcher {
 
     public static final String TAG = GalleryViewFlipper.class.getSimpleName();
-    private ImageLoader fullPhotoLoader;
     private int index;
 
-    private OnMotionEventListener motionListener;
+    private GalleryCallback galleryCallback;
     private GCAssetCollection collection;
+    private GalleryThreadPoolExecutor executor;
+    private Handler handler;
 
-    public GalleryViewFlipper(Context context, AttributeSet attrs) {
-	super(context, attrs);
-	init();
+    public enum PhotoChangeErrorType {
+	NO_PREVIOUS_ITEM, NO_NEXT_ITEM, GENERAL_ERROR;
     }
 
-    private void init() {
-	fullPhotoLoader = new ImageLoader(getContext(), R.drawable.placeholder_image_large, true, 0);
-	fullPhotoLoader.setDefaultImageSize(GCUtils.pixelsFromDp(getContext(), 300));
+    public interface GalleryCallback extends OnMotionEventListener {
 
-	final ImageZoomView viewOne = new ImageZoomView(getContext());
-	viewOne.setOnMotionEventListener(new OnMotionEventListenerImplementation());
-	this.addView(viewOne);
+	public void onPhotoChanged(int index, GCAssetModel asset);
 
-	final ImageZoomView viewTwo = new ImageZoomView(getContext());
-	viewTwo.setOnMotionEventListener(new OnMotionEventListenerImplementation());
-	this.addView(viewTwo);
+	public void onPhotoChangeError(PhotoChangeErrorType error);
     }
 
     public GalleryViewFlipper(Context context) {
@@ -49,16 +46,49 @@ public class GalleryViewFlipper extends ViewFlipper {
 	init();
     }
 
-    public void setMotionListener(OnMotionEventListener motionListener) {
-	this.motionListener = motionListener;
+    public GalleryViewFlipper(Context context, AttributeSet attrs) {
+	super(context, attrs);
+	init();
+    }
+
+    private void init() {
+	final OnMotionEventListenerImplementation motionEventListener = new OnMotionEventListenerImplementation();
+
+	final ImageZoomView viewOne = new ImageZoomView(getContext());
+	viewOne.setOnMotionEventListener(motionEventListener);
+	this.addView(viewOne);
+	final ImageZoomView viewTwo = new ImageZoomView(getContext());
+	viewTwo.setOnMotionEventListener(motionEventListener);
+	this.addView(viewTwo);
+	handler = new Handler();
+	executor = new GalleryThreadPoolExecutor(getContext());
+	executor.addObserver(new Observer() {
+
+	    @Override
+	    public void update(Observable observable, final Object data) {
+		if (isCurrentlySelectedPhoto((String) data)) {
+		    handler.post(new Runnable() {
+
+			@Override
+			public void run() {
+			    displayCurrentPhoto((String) data);
+			}
+		    });
+		}
+		Log.d(TAG, "Update " + data);
+	    }
+	});
+    }
+
+    public void setGalleryCallback(GalleryCallback galleryCallback) {
+	this.galleryCallback = galleryCallback;
     }
 
     public void setAssetCollection(GCAssetCollection collection, int index) {
 	this.collection = collection;
 	this.index = index;
-	fullPhotoLoader.displayImage(
-		GCUtils.getCustomSizePhotoURL(collection.get(index).getUrl(), 960, 960),
-		getCurrentView());
+	displayLargePhoto(collection.get(index).getUrl());
+	triggerPhotoChangedCallback();
     }
 
     public void setAssetCollection(GCAssetCollection collection) {
@@ -67,45 +97,70 @@ public class GalleryViewFlipper extends ViewFlipper {
 
     @Override
     public void showNext() {
-	this.setInAnimation(getContext(), R.anim.slide_in_left);
-	this.setOutAnimation(getContext(), R.anim.slide_out_left);
-	if (index + 1 < collection.size()) {
-	    index++;
-	    displayLargePhoto(collection.get(index).getUrl(), getNextChild());
-	    super.showNext();
+	if (index + 1 >= collection.size()) {
+	    triggerPhotoChangeError(PhotoChangeErrorType.NO_NEXT_ITEM);
+	    return;
 	}
-    }
-
-    public void displayLargePhoto(String url, ImageZoomView view) {
-	fullPhotoLoader.displayImage(GCUtils.getCustomSizePhotoURL(url, 960, 960), view);
+	index++;
+	super.showNext();
+	displayLargePhoto(collection.get(index).getUrl());
+	triggerPhotoChangedCallback();
     }
 
     @Override
     public void showPrevious() {
-	this.setInAnimation(getContext(), R.anim.slide_in_right);
-	this.setOutAnimation(getContext(), R.anim.slide_out_right);
-	if (index - 1 >= 0) {
-	    index--;
-	    displayLargePhoto(collection.get(index).getUrl(), getNextChild());
-	    super.showPrevious();
+	if (index - 1 < 0) {
+	    triggerPhotoChangeError(PhotoChangeErrorType.NO_PREVIOUS_ITEM);
+	    return;
 	}
+	index--;
+	super.showPrevious();
+	displayLargePhoto(collection.get(index).getUrl());
+	triggerPhotoChangedCallback();
+    }
+
+    private void triggerPhotoChangeError(PhotoChangeErrorType type) {
+	if (galleryCallback != null) {
+	    galleryCallback.onPhotoChangeError(type);
+	}
+    }
+
+    private void triggerPhotoChangedCallback() {
+	if (galleryCallback != null) {
+	    galleryCallback.onPhotoChanged(index, collection.get(index));
+	}
+    }
+
+    public GCAssetModel getSelectedItem() {
+	return collection.get(index);
+    }
+
+    private void displayLargePhoto(String url) {
+	Log.d(TAG, "in display large photo");
+	displayCurrentPhoto(null);
+	executor.runTask(GCUtils.getCustomSizePhotoURL(url, 960, 960));
+    }
+
+    public void displayCurrentPhoto(String url) {
+	executor.getLoader().displayImage(url, getCurrentView());
+    }
+
+    public boolean isCurrentlySelectedPhoto(String url) {
+	return url.contentEquals(GCUtils.getCustomSizePhotoURL(collection.get(index).getUrl(), 960,
+		960));
     }
 
     public ImageZoomView getNextChild() {
 	int displayedChild = getDisplayedChild();
-	if (displayedChild == 0) {
-	    displayedChild = 1;
-	} else {
-	    displayedChild = 0;
-	}
+	displayedChild = (getDisplayedChild() == 0) ? 1 : 0;
 	return getChildAt(displayedChild);
     }
 
     private final class OnMotionEventListenerImplementation implements OnMotionEventListener {
 	@Override
 	public void triggered(GestureEvent event) {
-	    if (motionListener != null) {
-		motionListener.triggered(event);
+	    if (galleryCallback != null) {
+		galleryCallback.triggered(event);
 	    }
 	    Log.d(TAG, event.toString());
 	    switch (event) {
@@ -138,6 +193,7 @@ public class GalleryViewFlipper extends ViewFlipper {
 	for (int i = 0; i < this.getChildCount(); i++) {
 	    this.getChildAt(i).destroyView();
 	}
+	executor.shutDown();
     }
-    
+
 }

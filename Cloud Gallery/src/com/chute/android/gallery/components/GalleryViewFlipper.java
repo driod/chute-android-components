@@ -62,22 +62,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 	this.addView(viewTwo);
 	handler = new Handler();
 	executor = new GalleryThreadPoolExecutor(getContext());
-	executor.addObserver(new Observer() {
-
-	    @Override
-	    public void update(Observable observable, final Object data) {
-		if (isCurrentlySelectedPhoto((String) data)) {
-		    handler.post(new Runnable() {
-
-			@Override
-			public void run() {
-			    displayCurrentPhoto((String) data);
-			}
-		    });
-		}
-		Log.d(TAG, "Update " + data);
-	    }
-	});
+	executor.addObserver(new ObserverImplementation());
     }
 
     public void setGalleryCallback(GalleryCallback galleryCallback) {
@@ -93,6 +78,10 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 
     public void setAssetCollection(GCAssetCollection collection) {
 	setAssetCollection(collection, 0);
+    }
+
+    public GCAssetCollection getAssetCollection() {
+	return collection;
     }
 
     @Override
@@ -194,6 +183,23 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 	    this.getChildAt(i).destroyView();
 	}
 	executor.shutDown();
+    }
+
+    private final class ObserverImplementation implements Observer {
+	@Override
+	public void update(Observable observable, final Object data) {
+	    if (isCurrentlySelectedPhoto((String) data)) {
+
+		handler.post(new Runnable() {
+
+		    @Override
+		    public void run() {
+			displayCurrentPhoto((String) data);
+		    }
+		});
+
+	    }
+	}
     }
 
 }

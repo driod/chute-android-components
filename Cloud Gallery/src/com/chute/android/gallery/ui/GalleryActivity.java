@@ -14,7 +14,6 @@ public class GalleryActivity extends Activity {
 
     protected static final String TAG = GalleryActivity.class.getSimpleName();
     private GalleryViewFlipper galleryView;
-    private final boolean isSavingState = false;
     private final String chuteId = "1946";
 
     @Override

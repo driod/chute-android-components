@@ -11,6 +11,9 @@ import android.widget.Toast;
 import com.chute.android.comments.util.intent.MainActivityIntentWrapper;
 import com.chute.android.comments.util.intent.PhotoCommentsActivityIntentWrapper;
 import com.chute.android.gallery.components.GalleryViewFlipper;
+import com.chute.android.gallery.components.GalleryViewFlipper.GalleryCallback;
+import com.chute.android.gallery.components.GalleryViewFlipper.PhotoChangeErrorType;
+import com.chute.android.gallery.zoom.PinchZoomListener.GestureEvent;
 import com.chute.android.gcshareview.intent.ShareActivityIntentWrapper;
 import com.chute.android.socialgallery.R;
 import com.chute.android.socialgallery.util.Constants;
@@ -19,6 +22,7 @@ import com.chute.android.socialgallery.util.view.HeartCheckbox;
 import com.chute.sdk.api.GCHttpCallback;
 import com.chute.sdk.api.chute.GCChutes;
 import com.chute.sdk.collections.GCAssetCollection;
+import com.chute.sdk.model.GCAssetModel;
 import com.chute.sdk.model.GCHttpRequestParameters;
 
 public class SocialGalleryActivity extends Activity {
@@ -34,18 +38,20 @@ public class SocialGalleryActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.social_gallery_activity);
-		
+
 		socialWrapper = new SocialGalleryActivityIntentWrapper(getIntent());
 
 		gallery = (GalleryViewFlipper) findViewById(R.id.galleryId);
+		gallery.setGalleryCallback(new NewGalleryCallback());
 		comments = (ImageButton) findViewById(R.id.btnComment);
 		comments.setOnClickListener(new CommentsClickListener());
 		share = (ImageButton) findViewById(R.id.btnShare);
 		share.setOnClickListener(new ShareClickListener());
 		heart = (HeartCheckbox) findViewById(R.id.btnHeart);
 
-		GCChutes.Resources.assets(getApplicationContext(), socialWrapper.getChuteId(),
-				new AssetCollectionCallback()).executeAsync();
+		GCChutes.Resources.assets(getApplicationContext(),
+				socialWrapper.getChuteId(), new AssetCollectionCallback())
+				.executeAsync();
 
 	}
 
@@ -55,6 +61,7 @@ public class SocialGalleryActivity extends Activity {
 		@Override
 		public void onSuccess(GCAssetCollection responseData) {
 			gallery.setAssetCollection(responseData);
+
 		}
 
 		@Override
@@ -74,15 +81,15 @@ public class SocialGalleryActivity extends Activity {
 		}
 
 	}
-	
-    final class CommentsClickListener implements OnClickListener {
+
+	final class CommentsClickListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
 			PhotoCommentsActivityIntentWrapper wrapper = new PhotoCommentsActivityIntentWrapper(
 					SocialGalleryActivity.this);
 			wrapper.setChuteId(socialWrapper.getChuteId());
-			wrapper.setAssetId(socialWrapper.getAssetId());
+			wrapper.setAssetId(gallery.getSelectedItem().getId());
 			wrapper.setChuteName(socialWrapper.getChuteName());
 			wrapper.startActivityForResult(SocialGalleryActivity.this,
 					Constants.ACTIVITY_FOR_RESULT_KEY);
@@ -104,6 +111,26 @@ public class SocialGalleryActivity extends Activity {
 
 	}
 
+	private final class NewGalleryCallback implements GalleryCallback {
+
+		@Override
+		public void triggered(GestureEvent event) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onPhotoChanged(int index, GCAssetModel asset) {
+			heart.markHeartByAssetId(asset.getId());
+		}
+
+		@Override
+		public void onPhotoChangeError(PhotoChangeErrorType error) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -4,7 +4,7 @@ Introduction
 
 Multi-Image Picker is a component made for developers to easily integrate it inside their app and enable photo picking functionality. This component enables searching for images on the device, displaying the images in a grid and creating GCLocalAssetCollection from the selected images in the grid.  
 
-![IMG_GCMultiImagePicker1](https://github.com/chute/Chute-Android-Kitchen-Sink/raw/master/Components/Multi-Image%20Picker/screenshots/IMG_GCMultiImagePicker1.png)
+![IMG_GCMultiImagePicker1](https://github.com/chute/chute-android-components/raw/master/Multi-Image%20Picker/screenshots/IMG_GCMultiImagePicker1.png)
 
 Implementation
 ====

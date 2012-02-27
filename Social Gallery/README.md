@@ -4,7 +4,7 @@ Introduction
 Social Gallery is a component that enables browsing photos in a gallery, sharing photos, commenting on photos and marking photos as favorite.
 It includes SDK library, Image Sharer library, Photo Comments library and Cloud Gallery library, and is targeted towards android developers who want to make their applications social. 
 
-![image1](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/1.png)![image2](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/2.png)![image3](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/3.png)![image4](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/4.png)
+![image1](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/1.png)![image2](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/2.png)![image3](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/3.png)![image4](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/4.png)![image5](https://github.com/chute/chute-android-components/raw/master/Social%20Gallery/screenshots/5.png)
 
 Setup
 ====

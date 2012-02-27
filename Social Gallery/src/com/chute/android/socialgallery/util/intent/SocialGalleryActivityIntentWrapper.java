@@ -13,7 +13,6 @@ public class SocialGalleryActivityIntentWrapper {
 
 	private static final String EXTRA_KEY_CHUTE_ID = "chuteId";
 	private static final String EXTRA_KEY_CHUTE_NAME = "chuteName";
-	private static final String EXTRA_KEY_ASSET_ID = "assetId";
 	private static final String EXTRA_KEY_CHUTE_SHORTCUT = "chuteShortcut";
 
 	private final Intent intent;
@@ -44,14 +43,6 @@ public class SocialGalleryActivityIntentWrapper {
 
 	public String getChuteId() {
 		return intent.getExtras().getString(EXTRA_KEY_CHUTE_ID);
-	}
-
-	public void setAssetId(String id) {
-		intent.putExtra(EXTRA_KEY_ASSET_ID, id);
-	}
-
-	public String getAssetId() {
-		return intent.getExtras().getString(EXTRA_KEY_ASSET_ID);
 	}
 
 	public void setChuteName(String name) {

@@ -73,7 +73,6 @@ private final class OnStartClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			SocialGalleryActivityIntentWrapper wrapper = new SocialGalleryActivityIntentWrapper(MainActivity.this);
-			wrapper.setAssetId(Constants.ASSET_ID);
 			wrapper.setChuteId(Constants.CHUTE_ID);
 			wrapper.setChuteName(Constants.CHUTE_NAME);
 			wrapper.setChuteShortcut(Constants.CHUTE_SHORTCUT);
@@ -145,7 +144,7 @@ When "comment" button is clicked, the PhotoCommentsActivityIntentWrapper starts 
 		public void onClick(View v) {
 			PhotoCommentsActivityIntentWrapper wrapper = new PhotoCommentsActivityIntentWrapper(
 					SocialGalleryActivity.this);
-			wrapper.setChuteId(socialWrapper.getChuteId());
+			wrapper.setChuteId(gallery.getSelectedItem().getId());
 			wrapper.setAssetId(socialWrapper.getAssetId());
 			wrapper.setChuteName(socialWrapper.getChuteName());
 			wrapper.startActivityForResult(SocialGalleryActivity.this,
@@ -155,4 +154,27 @@ When "comment" button is clicked, the PhotoCommentsActivityIntentWrapper starts 
 	}
 </code></pre>
 
+When "heart" button is clicked, the asset is marked as favorite in onPhotoChanged() method from the Cloud Gallery component GalleryCallback interface.
+<pre><code>
+private final class NewGalleryCallback implements GalleryCallback {
+
+		@Override
+		public void triggered(GestureEvent event) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onPhotoChanged(int index, GCAssetModel asset) {
+			heart.markHeartByAssetId(asset.getId());
+		}
+
+		@Override
+		public void onPhotoChangeError(PhotoChangeErrorType error) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+</code></pre>	
 	    

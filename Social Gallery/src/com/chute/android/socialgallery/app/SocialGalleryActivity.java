@@ -116,7 +116,6 @@ public class SocialGalleryActivity extends Activity {
 		@Override
 		public void triggered(GestureEvent event) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -153,6 +152,7 @@ public class SocialGalleryActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		heart.deleteObservers();
 		gallery.destroyGallery();
 	}
 

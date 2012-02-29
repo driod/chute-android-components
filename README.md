@@ -2,24 +2,34 @@
 Introduction
 ====
 
-Components repo displays four components which include Chute SDK library and are used for different social activities.
+Components repo displays components which are made for developers to easily integrate in their applications. All components include Chute SDK library and are used for different social activities.
+
+All components are written for the Android OS and assume you have the basic knowledge of JAVA and Android programming, that you have the android SDK and JDK setup and you are using Eclipse IDE with the android developer tools plugins installed. Since most of the components will work with code samples written for Android, any IDE other than Eclipse might be used for development.
 
 
 Components
 ====
 
-## Comments
-Sample application which demonstrates adding comments on an asset and saving the comments.
+## Photo Comments
+Demonstrates adding comments on photos and saving the comments.
 
-## MultiImagePicker
-Sample application which searches for images on the device, displays the images in a gallery and creates GCLocalAssetCollection from the selected images in the gallery.
+## Multi-Image Picker
+Searches for images on the device, displays the images in a grid and enables selecting as many images as users want.
 
-## ImageGrid
-Sample application which takes a random chute ID and displays GCAssetCollection for the chosen chute in a gallery. 
+## Image Grid
+Displays a grid of image thumbnails from any gallery. 
 
-## GCChuteListing
-Sample application which demonstrates a list of chutes organized in a GCChuteCollection.
+## Gallery Listing
+Creates a list of chutes organized in a chute collection.
 
+## Image Sharer
+Enables sharing photos with Facebook, Twitter, or via email.
+
+## Cloud Gallery
+Diplays photos in a swipable gallery.
+
+## Social Gallery 
+An expanded version of Cloud Gallery which supports photo sharing, hearting and commenting.
 
 Key Concepts
 ========
@@ -38,5 +48,4 @@ Collection of GCAssetModel.
 
 ## GCChuteCollection
 Collection of GCChuteModel.
-
 

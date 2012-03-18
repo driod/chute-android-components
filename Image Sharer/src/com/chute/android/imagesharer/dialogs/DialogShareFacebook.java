@@ -5,8 +5,6 @@ import java.net.URLEncoder;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.chute.android.imagesharer.util.AppUtil;
-
 public class DialogShareFacebook extends BaseDialog {
 
 	private final String shortcut;
@@ -20,8 +18,7 @@ public class DialogShareFacebook extends BaseDialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		loadUrl(String.format(FACEBOOK_BASE_URL,
-				URLEncoder.encode(AppUtil.generateShareURLfromCode(shortcut)),
+		loadUrl(String.format(FACEBOOK_BASE_URL, URLEncoder.encode(shortcut),
 				""));
 	}
 

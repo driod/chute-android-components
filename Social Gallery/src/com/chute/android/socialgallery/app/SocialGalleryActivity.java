@@ -27,128 +27,134 @@ import com.chute.sdk.model.GCHttpRequestParameters;
 
 public class SocialGalleryActivity extends Activity {
 
-    private ImageButton comments;
-    private ImageButton share;
-    private HeartCheckbox heart;
-    private GalleryViewFlipper gallery;
-    private SocialGalleryActivityIntentWrapper socialWrapper;
+	private ImageButton comments;
+	private ImageButton share;
+	private HeartCheckbox heart;
+	private GalleryViewFlipper gallery;
+	private SocialGalleryActivityIntentWrapper socialWrapper;
 
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setContentView(R.layout.social_gallery_activity);
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.social_gallery_activity);
 
-	socialWrapper = new SocialGalleryActivityIntentWrapper(getIntent());
+		socialWrapper = new SocialGalleryActivityIntentWrapper(getIntent());
 
-	gallery = (GalleryViewFlipper) findViewById(R.id.galleryId);
-	gallery.setGalleryCallback(new NewGalleryCallback());
-	comments = (ImageButton) findViewById(R.id.btnComment);
-	comments.setOnClickListener(new CommentsClickListener());
-	share = (ImageButton) findViewById(R.id.btnShare);
-	share.setOnClickListener(new ShareClickListener());
-	heart = (HeartCheckbox) findViewById(R.id.btnHeart);
+		gallery = (GalleryViewFlipper) findViewById(R.id.galleryId);
+		gallery.setGalleryCallback(new NewGalleryCallback());
+		comments = (ImageButton) findViewById(R.id.btnComment);
+		comments.setOnClickListener(new CommentsClickListener());
+		share = (ImageButton) findViewById(R.id.btnShare);
+		share.setOnClickListener(new ShareClickListener());
+		heart = (HeartCheckbox) findViewById(R.id.btnHeart);
 
-	GCChutes.Resources.assets(getApplicationContext(), socialWrapper.getChuteId(),
-		new AssetCollectionCallback()).executeAsync();
+		GCChutes.Resources.assets(getApplicationContext(),
+				socialWrapper.getChuteId(), new AssetCollectionCallback())
+				.executeAsync();
 
-    }
+	}
 
-    private final class AssetCollectionCallback implements GCHttpCallback<GCAssetCollection> {
+	private final class AssetCollectionCallback implements
+			GCHttpCallback<GCAssetCollection> {
+
+		@Override
+		public void onSuccess(GCAssetCollection responseData) {
+			gallery.setAssetCollection(responseData);
+
+		}
+
+		@Override
+		public void onHttpException(GCHttpRequestParameters params,
+				Throwable exception) {
+
+		}
+
+		@Override
+		public void onHttpError(int responseCode, String statusMessage) {
+
+		}
+
+		@Override
+		public void onParserException(int responseCode, Throwable exception) {
+
+		}
+
+	}
+
+	final class CommentsClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			PhotoCommentsActivityIntentWrapper wrapper = new PhotoCommentsActivityIntentWrapper(
+					SocialGalleryActivity.this);
+			wrapper.setChuteId(socialWrapper.getChuteId());
+			wrapper.setAssetId(gallery.getSelectedItem().getId());
+			wrapper.setChuteName(socialWrapper.getChuteName());
+			wrapper.startActivityForResult(SocialGalleryActivity.this,
+					Constants.ACTIVITY_FOR_RESULT_KEY);
+		}
+
+	}
+
+	private final class ShareClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			ShareActivityIntentWrapper wrapper = new ShareActivityIntentWrapper(
+					SocialGalleryActivity.this);
+			wrapper.setChuteId(socialWrapper.getChuteId());
+			wrapper.setChuteName(socialWrapper.getChuteName());
+			wrapper.setChuteShortcut(socialWrapper.getChuteShortcut());
+			wrapper.setAssetShareUrl(gallery.getSelectedItem().getShareUrl());
+			wrapper.startActivity(SocialGalleryActivity.this);
+		}
+
+	}
+
+	private final class NewGalleryCallback implements GalleryCallback {
+
+		@Override
+		public void triggered(GestureEvent event) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onPhotoChanged(int index, GCAssetModel asset) {
+			heart.markHeartByAssetId(asset.getId());
+		}
+
+		@Override
+		public void onPhotoChangeError(PhotoChangeErrorType error) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
 
 	@Override
-	public void onSuccess(GCAssetCollection responseData) {
-	    gallery.setAssetCollection(responseData);
-
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode != Constants.ACTIVITY_FOR_RESULT_KEY
+				|| resultCode != RESULT_OK) {
+			return;
+		}
+		MainActivityIntentWrapper wrapper = new MainActivityIntentWrapper(data);
+		if (wrapper.getExtraComments() > 0) {
+			Toast.makeText(getApplicationContext(),
+					wrapper.getExtraComments() + " Comments added!",
+					Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(getApplicationContext(), "No Comments added!",
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
-	public void onHttpException(GCHttpRequestParameters params, Throwable exception) {
-
+	protected void onDestroy() {
+		super.onDestroy();
+		heart.deleteObservers();
+		gallery.destroyGallery();
 	}
-
-	@Override
-	public void onHttpError(int responseCode, String statusMessage) {
-
-	}
-
-	@Override
-	public void onParserException(int responseCode, Throwable exception) {
-
-	}
-
-    }
-
-    final class CommentsClickListener implements OnClickListener {
-
-	@Override
-	public void onClick(View v) {
-	    PhotoCommentsActivityIntentWrapper wrapper = new PhotoCommentsActivityIntentWrapper(
-		    SocialGalleryActivity.this);
-	    wrapper.setChuteId(socialWrapper.getChuteId());
-	    wrapper.setAssetId(gallery.getSelectedItem().getId());
-	    wrapper.setChuteName(socialWrapper.getChuteName());
-	    wrapper.startActivityForResult(SocialGalleryActivity.this,
-		    Constants.ACTIVITY_FOR_RESULT_KEY);
-	}
-
-    }
-
-    private final class ShareClickListener implements OnClickListener {
-
-	@Override
-	public void onClick(View v) {
-	    ShareActivityIntentWrapper wrapper = new ShareActivityIntentWrapper(
-		    SocialGalleryActivity.this);
-	    wrapper.setChuteId(socialWrapper.getChuteId());
-	    wrapper.setChuteName(socialWrapper.getChuteName());
-	    wrapper.setChuteShortcut(socialWrapper.getChuteShortcut());
-	    wrapper.startActivity(SocialGalleryActivity.this);
-	}
-
-    }
-
-    private final class NewGalleryCallback implements GalleryCallback {
-
-	@Override
-	public void triggered(GestureEvent event) {
-	    // TODO Auto-generated method stub
-	}
-
-	@Override
-	public void onPhotoChanged(int index, GCAssetModel asset) {
-	    heart.markHeartByAssetId(asset.getId());
-	}
-
-	@Override
-	public void onPhotoChangeError(PhotoChangeErrorType error) {
-	    // TODO Auto-generated method stub
-
-	}
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	super.onActivityResult(requestCode, resultCode, data);
-	if (requestCode != Constants.ACTIVITY_FOR_RESULT_KEY || resultCode != RESULT_OK) {
-	    return;
-	}
-	MainActivityIntentWrapper wrapper = new MainActivityIntentWrapper(data);
-	if (wrapper.getExtraComments() > 0) {
-	    Toast.makeText(getApplicationContext(),
-		    wrapper.getExtraComments() + " Comments added!", Toast.LENGTH_SHORT).show();
-	} else {
-	    Toast.makeText(getApplicationContext(), "No Comments added!", Toast.LENGTH_SHORT)
-		    .show();
-	}
-    }
-
-    @Override
-    protected void onDestroy() {
-	super.onDestroy();
-	heart.deleteObservers();
-	gallery.destroyGallery();
-    }
 
 }

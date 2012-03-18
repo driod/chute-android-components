@@ -5,7 +5,6 @@ import com.chute.android.imagesharer.R;
 import com.chute.android.imagesharer.dialogs.DialogShareFacebook;
 import com.chute.android.imagesharer.dialogs.DialogShareTwitter;
 import com.chute.android.imagesharer.intent.ShareActivityIntentWrapper;
-import com.chute.android.imagesharer.util.AppUtil;
 import com.chute.android.imagesharer.util.IntentUtil;
 
 import android.app.Activity;
@@ -58,8 +57,7 @@ public class ShareActivity extends Activity {
 	@Override
 	public void onClick(View v) {
 	    String body = getString(R.string.share_email_body);
-	    body = String.format(body, wrapper.getChuteName(),
-		    AppUtil.generateShareURLfromCode(wrapper.getChuteShortcut()));
+	    body = String.format(body, wrapper.getChuteName(), wrapper.getAssetShareUrl());
 	    IntentUtil.sendEmail(v.getContext(), null, null, body);
 	}
     }
@@ -76,9 +74,9 @@ public class ShareActivity extends Activity {
     protected Dialog onCreateDialog(int id) {
 	switch (id) {
 	case DIALOG_TWITTER:
-	    return new DialogShareTwitter(this, wrapper.getChuteShortcut());
+	    return new DialogShareTwitter(this, wrapper.getAssetShareUrl());
 	case DIAlOG_FACEBOOK:
-	    return new DialogShareFacebook(this, wrapper.getChuteShortcut());
+	    return new DialogShareFacebook(this, wrapper.getAssetShareUrl());
 	}
 	return super.onCreateDialog(id);
     }

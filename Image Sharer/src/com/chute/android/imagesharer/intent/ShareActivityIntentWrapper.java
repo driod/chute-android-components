@@ -12,6 +12,7 @@ public class ShareActivityIntentWrapper {
 			.getSimpleName();
 
 	private static final String EXTRA_CHUTE_SHORTCUT = "extra_chute_shortcut";
+	private static final String EXTRA_ASSET_SHARE_URL = "extra_asset_share_url";
 	private static final String EXTRA_CHUTE_NAME = "key_chute_name";
 	private static final String EXTRA_CHUTE_ID = "chuteId";
 
@@ -58,6 +59,14 @@ public class ShareActivityIntentWrapper {
 
 	public String getChuteShortcut() {
 		return intent.getExtras().getString(EXTRA_CHUTE_SHORTCUT);
+	}
+	
+	public void setAssetShareUrl(String url) {
+		intent.putExtra(EXTRA_ASSET_SHARE_URL, url);
+	}
+	
+	public String getAssetShareUrl() {
+		return intent.getExtras().getString(EXTRA_ASSET_SHARE_URL);
 	}
 
 	public void startActivity(Activity context) {

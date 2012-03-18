@@ -12,7 +12,7 @@ public class GCShareViewApp extends Application {
 	public static final String TAG = GCShareViewApp.class.getSimpleName();
 	
 	private static ImageLoader createImageLoader(Context context) {
-		ImageLoader imageLoader = new ImageLoader(context, R.drawable.icon);
+		ImageLoader imageLoader = new ImageLoader(context, R.drawable.placeholder_image_small);
 		imageLoader.setDefaultImageSize((int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 75, context.getResources()
 						.getDisplayMetrics()));

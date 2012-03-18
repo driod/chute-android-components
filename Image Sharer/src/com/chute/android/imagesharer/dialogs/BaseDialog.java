@@ -1,4 +1,4 @@
-package com.chute.android.gcshareview.dialogs;
+package com.chute.android.imagesharer.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

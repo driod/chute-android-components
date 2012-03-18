@@ -1,9 +1,9 @@
-package com.chute.android.gcshareview.dialogs;
+package com.chute.android.imagesharer.dialogs;
 
 import java.net.URLEncoder;
 
-import com.chute.android.gcshareview.util.AppUtil;
-import com.chute.android.gcshareview.util.Constants;
+import com.chute.android.imagesharer.util.AppUtil;
+import com.chute.android.imagesharer.util.Constants;
 
 import android.content.Context;
 import android.os.Bundle;

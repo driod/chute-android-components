@@ -14,7 +14,7 @@ import com.chute.android.gallery.components.GalleryViewFlipper;
 import com.chute.android.gallery.components.GalleryViewFlipper.GalleryCallback;
 import com.chute.android.gallery.components.GalleryViewFlipper.PhotoChangeErrorType;
 import com.chute.android.gallery.zoom.PinchZoomListener.GestureEvent;
-import com.chute.android.gcshareview.intent.ShareActivityIntentWrapper;
+import com.chute.android.imagesharer.intent.ShareActivityIntentWrapper;
 import com.chute.android.socialgallery.R;
 import com.chute.android.socialgallery.util.Constants;
 import com.chute.android.socialgallery.util.intent.SocialGalleryActivityIntentWrapper;

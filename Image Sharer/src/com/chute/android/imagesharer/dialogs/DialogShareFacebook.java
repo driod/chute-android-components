@@ -1,11 +1,11 @@
-package com.chute.android.gcshareview.dialogs;
+package com.chute.android.imagesharer.dialogs;
 
 import java.net.URLEncoder;
 
 import android.content.Context;
 import android.os.Bundle;
 
-import com.chute.android.gcshareview.util.AppUtil;
+import com.chute.android.imagesharer.util.AppUtil;
 
 public class DialogShareFacebook extends BaseDialog {
 

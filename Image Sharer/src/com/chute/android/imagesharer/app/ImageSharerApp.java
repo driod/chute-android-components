@@ -1,18 +1,18 @@
-package com.chute.android.gcshareview.app;
+package com.chute.android.imagesharer.app;
 
-import com.chute.android.gcshareview.R;
+import com.chute.android.imagesharer.R;
 import com.darko.imagedownloader.ImageLoader;
 
 import android.app.Application;
 import android.content.Context;
 import android.util.TypedValue;
 
-public class GCShareViewApp extends Application {
+public class ImageSharerApp extends Application {
 
-	public static final String TAG = GCShareViewApp.class.getSimpleName();
+	public static final String TAG = ImageSharerApp.class.getSimpleName();
 	
 	private static ImageLoader createImageLoader(Context context) {
-		ImageLoader imageLoader = new ImageLoader(context, R.drawable.icon);
+		ImageLoader imageLoader = new ImageLoader(context, R.drawable.placeholder_image_small);
 		imageLoader.setDefaultImageSize((int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 75, context.getResources()
 						.getDisplayMetrics()));

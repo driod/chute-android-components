@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".app.SocialGalleryActivity" />
-        <activity android:name="com.chute.android.gcshareview.app.ShareActivity" />
+        <activity android:name="com.chute.android.imagesharer.app.ShareActivity" />
         <activity
             android:name="com.chute.sdk.api.authentication.GCAuthenticationActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >

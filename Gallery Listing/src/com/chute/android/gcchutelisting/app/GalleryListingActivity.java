@@ -2,9 +2,6 @@ package com.chute.android.gcchutelisting.app;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,7 +39,6 @@ public class GalleryListingActivity extends Activity {
 			adapter = new GalleryListingAdapter(GalleryListingActivity.this,
 					responseData);
 			listView.setAdapter(adapter);
-			listView.setOnItemClickListener(new ListItemClickListener());
 		}
 
 		@Override
@@ -67,13 +63,4 @@ public class GalleryListingActivity extends Activity {
 		}
 	}
 
-	private final class ListItemClickListener implements OnItemClickListener {
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			finish();
-		}
-
-	}
 }

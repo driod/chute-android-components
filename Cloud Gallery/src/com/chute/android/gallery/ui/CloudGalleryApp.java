@@ -7,10 +7,10 @@ import com.chute.android.gallery.R;
 import com.chute.sdk.utils.GCUtils;
 import com.darko.imagedownloader.ImageLoader;
 
-public class GCGalleryApp extends Application {
+public class CloudGalleryApp extends Application {
 
     @SuppressWarnings("unused")
-    private static final String TAG = GCGalleryApp.class.getSimpleName();
+    private static final String TAG = CloudGalleryApp.class.getSimpleName();
 
     private static ImageLoader createImageLoader(Context context) {
 	final ImageLoader imageLoader = new ImageLoader(context, R.drawable.placeholder_image_small);

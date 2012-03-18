@@ -1,12 +1,12 @@
-package com.chute.android.gcshareview.app;
+package com.chute.android.imagesharer.app;
 
 
-import com.chute.android.gcshareview.R;
-import com.chute.android.gcshareview.dialogs.DialogShareFacebook;
-import com.chute.android.gcshareview.dialogs.DialogShareTwitter;
-import com.chute.android.gcshareview.intent.ShareActivityIntentWrapper;
-import com.chute.android.gcshareview.util.AppUtil;
-import com.chute.android.gcshareview.util.IntentUtil;
+import com.chute.android.imagesharer.R;
+import com.chute.android.imagesharer.dialogs.DialogShareFacebook;
+import com.chute.android.imagesharer.dialogs.DialogShareTwitter;
+import com.chute.android.imagesharer.intent.ShareActivityIntentWrapper;
+import com.chute.android.imagesharer.util.AppUtil;
+import com.chute.android.imagesharer.util.IntentUtil;
 
 import android.app.Activity;
 import android.app.Dialog;

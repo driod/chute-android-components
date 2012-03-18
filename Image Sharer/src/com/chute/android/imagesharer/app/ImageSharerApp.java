@@ -1,6 +1,6 @@
-package com.chute.android.gcshareview.app;
+package com.chute.android.imagesharer.app;
 
-import com.chute.android.gcshareview.R;
+import com.chute.android.imagesharer.R;
 import com.darko.imagedownloader.ImageLoader;
 
 import android.app.Application;

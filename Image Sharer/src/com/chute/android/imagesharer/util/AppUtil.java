@@ -1,4 +1,4 @@
-package com.chute.android.gcshareview.util;
+package com.chute.android.imagesharer.util;
 
 import java.io.File;
 import java.io.IOException;

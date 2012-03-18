@@ -1,6 +1,6 @@
-package com.chute.android.gcshareview.util;
+package com.chute.android.imagesharer.util;
 
-import com.chute.android.gcshareview.R;
+import com.chute.android.imagesharer.R;
 
 import android.content.Context;
 import android.content.Intent;

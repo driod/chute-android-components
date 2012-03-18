@@ -7,9 +7,9 @@ import android.app.Application;
 import android.content.Context;
 import android.util.TypedValue;
 
-public class GCShareViewApp extends Application {
+public class ImageSharerApp extends Application {
 
-	public static final String TAG = GCShareViewApp.class.getSimpleName();
+	public static final String TAG = ImageSharerApp.class.getSimpleName();
 	
 	private static ImageLoader createImageLoader(Context context) {
 		ImageLoader imageLoader = new ImageLoader(context, R.drawable.placeholder_image_small);

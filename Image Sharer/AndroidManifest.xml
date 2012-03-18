@@ -9,7 +9,7 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:name=".app.GCShareViewApp"
+        android:name=".app.ImageSharerApp"
         android:screenOrientation="portrait"
         android:theme="@android:style/Theme.Black.NoTitleBar" >
         <service android:name="com.chute.sdk.api.GCHttpService" />

@@ -60,7 +60,15 @@ public class SocialGalleryActivity extends Activity {
 
 		@Override
 		public void onSuccess(GCAssetCollection responseData) {
-			gallery.setAssetCollection(responseData);
+			if (responseData.size() > 0) {
+				gallery.setAssetCollection(responseData);
+			} else {
+				Toast.makeText(
+						getApplicationContext(),
+						getApplicationContext().getResources().getString(
+								R.string.no_photos_in_this_chute),
+						Toast.LENGTH_SHORT).show();
+			}
 
 		}
 
@@ -86,13 +94,21 @@ public class SocialGalleryActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			PhotoCommentsActivityIntentWrapper wrapper = new PhotoCommentsActivityIntentWrapper(
-					SocialGalleryActivity.this);
-			wrapper.setChuteId(socialWrapper.getChuteId());
-			wrapper.setAssetId(gallery.getSelectedItem().getId());
-			wrapper.setChuteName(socialWrapper.getChuteName());
-			wrapper.startActivityForResult(SocialGalleryActivity.this,
-					Constants.ACTIVITY_FOR_RESULT_KEY);
+			if (gallery.getAssetCollection() != null) {
+				PhotoCommentsActivityIntentWrapper wrapper = new PhotoCommentsActivityIntentWrapper(
+						SocialGalleryActivity.this);
+				wrapper.setChuteId(socialWrapper.getChuteId());
+				wrapper.setAssetId(gallery.getSelectedItem().getId());
+				wrapper.setChuteName(socialWrapper.getChuteName());
+				wrapper.startActivityForResult(SocialGalleryActivity.this,
+						Constants.ACTIVITY_FOR_RESULT_KEY);
+			} else {
+				Toast.makeText(
+						getApplicationContext(),
+						getApplicationContext().getResources().getString(
+								R.string.no_photos_in_this_chute),
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 
 	}
@@ -101,13 +117,23 @@ public class SocialGalleryActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			ShareActivityIntentWrapper wrapper = new ShareActivityIntentWrapper(
-					SocialGalleryActivity.this);
-			wrapper.setChuteId(socialWrapper.getChuteId());
-			wrapper.setChuteName(socialWrapper.getChuteName());
-			wrapper.setChuteShortcut(socialWrapper.getChuteShortcut());
-			wrapper.setAssetShareUrl(gallery.getSelectedItem().getShareUrl());
-			wrapper.startActivity(SocialGalleryActivity.this);
+			if (gallery.getAssetCollection() != null) {
+				ShareActivityIntentWrapper wrapper = new ShareActivityIntentWrapper(
+						SocialGalleryActivity.this);
+				wrapper.setChuteId(socialWrapper.getChuteId());
+				wrapper.setChuteName(socialWrapper.getChuteName());
+				wrapper.setChuteShortcut(socialWrapper.getChuteShortcut());
+				wrapper.setAssetShareUrl(gallery.getSelectedItem()
+						.getShareUrl());
+				wrapper.startActivity(SocialGalleryActivity.this);
+			} else {
+				Toast.makeText(
+						getApplicationContext(),
+						getApplicationContext().getResources().getString(
+								R.string.no_photos_in_this_chute),
+						Toast.LENGTH_SHORT).show();
+
+			}
 		}
 
 	}
@@ -141,12 +167,18 @@ public class SocialGalleryActivity extends Activity {
 		}
 		MainActivityIntentWrapper wrapper = new MainActivityIntentWrapper(data);
 		if (wrapper.getExtraComments() > 0) {
-			Toast.makeText(getApplicationContext(),
-					wrapper.getExtraComments() + " Comments added!",
+			Toast.makeText(
+					getApplicationContext(),
+					wrapper.getExtraComments()
+							+ getApplicationContext().getResources().getString(
+									R.string.comments_added),
 					Toast.LENGTH_SHORT).show();
 		} else {
-			Toast.makeText(getApplicationContext(), "No Comments added!",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(
+					getApplicationContext(),
+					getApplicationContext().getResources().getString(
+							R.string.no_comments_added), Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
 

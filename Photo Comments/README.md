@@ -2,7 +2,7 @@
 Introduction
 ====
 
-Photo Comments is a component made for developers to easily integrate it inside their app and enable photo commenting functionality. This component enables adding comments on an asset and saving the comments. It includes Chute SDK library and is targeted towards android developers who want to make their applications social. 
+Photo Comments is a component made for developers to easily integrate it inside their app and enable photo commenting functionality. This component enables adding comments on an asset and saving the comments. It includes Chute SDK library. 
 
 ![image1](https://github.com/chute/chute-android-components/raw/master/Photo%20Comments/screenshots/1.png)
 

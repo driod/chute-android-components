@@ -2,7 +2,7 @@
 Introduction
 ====
 
-Gallery Listing is a component made for developers to easily integrate it inside their app and enable gallery listing functionality. This component gets chutes using the current user ID and displays them in a ListView. The component includes Chute SDK library and is targeted towards android developers who want to make their applications social.    
+Gallery Listing is a component made for developers to easily integrate it inside their app and enable gallery listing functionality. This component gets chutes using the current user ID and displays them in a ListView. The component includes Chute SDK library.    
 
 ![image1](https://github.com/chute/chute-android-components/raw/master/Gallery%20Listing/screenshots/1.png)
 

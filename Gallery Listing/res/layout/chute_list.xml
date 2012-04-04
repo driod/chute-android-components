@@ -21,5 +21,6 @@
         android:footerDividersEnabled="false"
         android:scrollingCache="false" >
     </ListView>
+    <!-- Preview: listitem=@layout/adapter_item -->
 
 </LinearLayout>

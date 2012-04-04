@@ -16,7 +16,7 @@
 
         <activity
             android:label="@string/app_name"
-            android:name=".app.MainActivity"
+            android:name=".app.GalleryListingActivity"
             android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".app.GalleryListingActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name="com.chute.sdk.api.authentication.GCAuthenticationActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >

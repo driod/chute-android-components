@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<style name="themePhotoMenu" parent="@android:style/Theme.Light.Panel">
-            <item name="android:windowBackground">@color/transparent</item>
-        </style>
-    
+	<style name="themePhotoMenu" parent="@android:style/Theme.Light.Panel">
+		<item name="android:windowBackground">@color/transparent</item>
+	</style>
+
+	<style name="buttonStyle" parent="android:Widget.Button">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textSize">125sp</item>
+	</style>
+
+
 </resources>

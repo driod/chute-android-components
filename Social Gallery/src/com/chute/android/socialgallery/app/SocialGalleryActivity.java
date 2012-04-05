@@ -75,17 +75,20 @@ public class SocialGalleryActivity extends Activity {
 		@Override
 		public void onHttpException(GCHttpRequestParameters params,
 				Throwable exception) {
-
+			Toast.makeText(getApplicationContext(), R.string.http_exception,
+					Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
 		public void onHttpError(int responseCode, String statusMessage) {
-
+			Toast.makeText(getApplicationContext(), R.string.http_error,
+					Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
 		public void onParserException(int responseCode, Throwable exception) {
-
+			Toast.makeText(getApplicationContext(), R.string.parsing_exception,
+					Toast.LENGTH_SHORT).show();
 		}
 
 	}

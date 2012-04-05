@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, GCGalleryActivity!</string>
-    <string name="app_name">GCGallery</string>
+    <string name="hello">Hello World, CloudGalleryActivity!</string>
+    <string name="app_name">Cloud Gallery</string>
+    
+    <!-- Toast messages -->
+    <string name="parsing_exception">Invalid response format</string>
+    <string name="http_exception">"Connection problem, check your connection and try again"</string>
+    <string name="http_error">Server Problem, Try again</string>
 
 </resources>

@@ -25,7 +25,6 @@ public class ImageSharerApp extends Application {
 	public void onCreate() {
 		super.onCreate();
 		mImageLoader = createImageLoader(this);
-//		PreferenceUtil.init(getApplicationContext());
 	}
 
 	@Override

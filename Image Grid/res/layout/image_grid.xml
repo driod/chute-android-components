@@ -20,5 +20,7 @@
         android:paddingRight="1dip"
         android:paddingTop="10dip"
         android:verticalSpacing="5dip" />
+        
+        <!-- Preview: listitem=@layout/adapter_item -->
 
 </LinearLayout>

@@ -13,7 +13,7 @@ public class ImageSharerApp extends Application {
 	
 	private static ImageLoader createImageLoader(Context context) {
 		ImageLoader imageLoader = new ImageLoader(context, R.drawable.placeholder_image_small);
-		imageLoader.setDefaultImageSize((int) TypedValue.applyDimension(
+		imageLoader.setDefaultBitmapSize((int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 75, context.getResources()
 						.getDisplayMetrics()));
 		return imageLoader;

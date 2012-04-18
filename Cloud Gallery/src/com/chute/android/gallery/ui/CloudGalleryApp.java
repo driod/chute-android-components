@@ -14,7 +14,7 @@ public class CloudGalleryApp extends Application {
 
     private static ImageLoader createImageLoader(Context context) {
 	final ImageLoader imageLoader = new ImageLoader(context, R.drawable.placeholder_image_small);
-	imageLoader.setDefaultImageSize(GCUtils.pixelsFromDp(context, 75));
+	imageLoader.setDefaultBitmapSize(GCUtils.pixelsFromDp(context, 75));
 	return imageLoader;
     }
 

@@ -26,113 +26,128 @@ import com.chute.sdk.parsers.GCCommentListObjectParser;
 import com.chute.sdk.parsers.GCCommentSingleObjectParser;
 
 public class PhotoCommentsActivity extends Activity {
-    @SuppressWarnings("unused")
-    private static final String TAG = PhotoCommentsActivity.class.getSimpleName();
-    private ListView listView;
-    private TextView titleView;
-    private EditText comment;
-    private PhotoCommentsActivityIntentWrapper wrapper;
-    private PhotoCommentsAdapter adapter;
+	@SuppressWarnings("unused")
+	private static final String TAG = PhotoCommentsActivity.class
+			.getSimpleName();
+	private ListView listView;
+	private TextView titleView;
+	private EditText comment;
+	private PhotoCommentsActivityIntentWrapper wrapper;
+	private PhotoCommentsAdapter adapter;
 
-    private int commentAddedCount = 0;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setContentView(R.layout.comments_activity);
-	listView = (ListView) findViewById(R.id.listView);
-	listView.setCacheColorHint(Color.TRANSPARENT);
-	listView.setDivider(null);
-	listView.setDividerHeight(25);
-	adapter = new PhotoCommentsAdapter(this, new GCCommentCollection());
-	listView.setAdapter(adapter);
-	titleView = (TextView) findViewById(R.id.titleView);
-
-	wrapper = new PhotoCommentsActivityIntentWrapper(getIntent());
-
-	GCComments.get(getApplicationContext(), wrapper.getChuteId(), wrapper.getAssetId(),
-		new GCCommentListObjectParser(), new CommentCollectionCallback()).executeAsync();
-	titleView.setText(wrapper.getChuteName());
-
-	comment = (EditText) findViewById(R.id.editTextComment);
-	Button save = (Button) findViewById(R.id.buttonSave);
-	save.setOnClickListener(new OnSaveClickListener());
-
-    }
-
-    private final class OnSaveClickListener implements OnClickListener {
-	@Override
-	public void onClick(View v) {
-	    String comment = PhotoCommentsActivity.this.comment.getText().toString();
-	    if (TextUtils.isEmpty(comment)) {
-		Toast.makeText(getApplicationContext(), R.string.toast_enter_comment,
-			Toast.LENGTH_SHORT).show();
-		return;
-	    }
-	    GCComments.add(getApplicationContext(), wrapper.getChuteId(), wrapper.getAssetId(),
-		    comment, new GCCommentSingleObjectParser(), new CommentsAddCallback())
-		    .executeAsync();
-	    PhotoCommentsActivity.this.comment.getText().clear();
-	}
-    }
-
-    private final class CommentsAddCallback implements GCHttpCallback<GCCommentModel> {
-	@Override
-	public void onSuccess(GCCommentModel responseData) {
-	    adapter.addComment(responseData);
-	    Toast.makeText(getApplicationContext(), R.string.toast_comment_added,
-		    Toast.LENGTH_SHORT).show();
-	    commentAddedCount++;
-	}
+	private int commentAddedCount = 0;
 
 	@Override
-	public void onHttpException(GCHttpRequestParameters params, Throwable exception) {
-		Toast.makeText(getApplicationContext(), R.string.http_exception, Toast.LENGTH_SHORT).show();
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.comments_activity);
+		listView = (ListView) findViewById(R.id.listView);
+		listView.setCacheColorHint(Color.TRANSPARENT);
+		listView.setDivider(null);
+		listView.setDividerHeight(25);
+		adapter = new PhotoCommentsAdapter(this, new GCCommentCollection());
+		listView.setAdapter(adapter);
+		titleView = (TextView) findViewById(R.id.titleView);
+
+		wrapper = new PhotoCommentsActivityIntentWrapper(getIntent());
+
+		GCComments.get(getApplicationContext(), wrapper.getChuteId(),
+				wrapper.getAssetId(), new GCCommentListObjectParser(),
+				new CommentCollectionCallback()).executeAsync();
+		titleView.setText(wrapper.getChuteName());
+
+		comment = (EditText) findViewById(R.id.editTextComment);
+		Button save = (Button) findViewById(R.id.buttonSave);
+		save.setOnClickListener(new OnSaveClickListener());
+
+	}
+
+	private final class OnSaveClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			String comment = PhotoCommentsActivity.this.comment.getText()
+					.toString();
+			if (TextUtils.isEmpty(comment)) {
+				Toast.makeText(getApplicationContext(),
+						R.string.toast_enter_comment, Toast.LENGTH_SHORT)
+						.show();
+				return;
+			}
+			GCComments.add(getApplicationContext(), wrapper.getChuteId(),
+					wrapper.getAssetId(), comment,
+					new GCCommentSingleObjectParser(),
+					new CommentsAddCallback()).executeAsync();
+			PhotoCommentsActivity.this.comment.getText().clear();
+		}
+	}
+
+	private final class CommentsAddCallback implements
+			GCHttpCallback<GCCommentModel> {
+		@Override
+		public void onSuccess(GCCommentModel responseData) {
+			adapter.addComment(responseData);
+			Toast.makeText(getApplicationContext(),
+					R.string.toast_comment_added, Toast.LENGTH_SHORT).show();
+			commentAddedCount++;
+		}
+
+		@Override
+		public void onHttpException(GCHttpRequestParameters params,
+				Throwable exception) {
+			Toast.makeText(getApplicationContext(), R.string.http_exception,
+					Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onHttpError(int responseCode, String statusMessage) {
+			Toast.makeText(getApplicationContext(), R.string.http_error,
+					Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onParserException(int responseCode, Throwable exception) {
+			Toast.makeText(getApplicationContext(), R.string.parsing_exception,
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private final class CommentCollectionCallback implements
+			GCHttpCallback<GCCommentCollection> {
+		@Override
+		public void onSuccess(GCCommentCollection responseData) {
+			adapter.changeData(responseData);
+		}
+
+		@Override
+		public void onHttpException(GCHttpRequestParameters params,
+				Throwable exception) {
+			Toast.makeText(getApplicationContext(),
+					R.string.comments_http_exception, Toast.LENGTH_SHORT)
+					.show();
+		}
+
+		@Override
+		public void onHttpError(int responseCode, String statusMessage) {
+			Toast.makeText(
+					getApplicationContext(),
+					R.string.comments_http_error + responseCode + " "
+							+ statusMessage, Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onParserException(int responseCode, Throwable exception) {
+			Toast.makeText(getApplicationContext(),
+					R.string.comments_parser_error, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
-	public void onHttpError(int responseCode, String statusMessage) {
-		Toast.makeText(getApplicationContext(), R.string.http_error, Toast.LENGTH_SHORT).show();
+	public void onBackPressed() {
+		MainActivityIntentWrapper wrapper = new MainActivityIntentWrapper(
+				new Intent());
+		wrapper.setExtraComments(commentAddedCount);
+		setResult(RESULT_OK, wrapper.getIntent());
+		super.onBackPressed();
 	}
-
-	@Override
-	public void onParserException(int responseCode, Throwable exception) {
-		Toast.makeText(getApplicationContext(), R.string.parsing_exception, Toast.LENGTH_SHORT).show();
-	}
-    }
-
-    private final class CommentCollectionCallback implements GCHttpCallback<GCCommentCollection> {
-	@Override
-	public void onSuccess(GCCommentCollection responseData) {
-	    adapter.changeData(responseData);
-	}
-
-	@Override
-	public void onHttpException(GCHttpRequestParameters params, Throwable exception) {
-	    Toast.makeText(getApplicationContext(), "Failed to get comments, Connection error",
-		    Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onHttpError(int responseCode, String statusMessage) {
-	    Toast.makeText(getApplicationContext(),
-		    "Failed to get comments, server error " + responseCode + " " + statusMessage,
-		    Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onParserException(int responseCode, Throwable exception) {
-	    Toast.makeText(getApplicationContext(), "Failed to get comments, parser error",
-		    Toast.LENGTH_SHORT).show();
-	}
-    }
-
-    @Override
-    public void onBackPressed() {
-	MainActivityIntentWrapper wrapper = new MainActivityIntentWrapper(new Intent());
-	wrapper.setExtraComments(commentAddedCount);
-	setResult(RESULT_OK, wrapper.getIntent());
-	super.onBackPressed();
-    }
 
 }

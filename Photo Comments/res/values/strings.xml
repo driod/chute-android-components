@@ -9,5 +9,8 @@
     <string name="parsing_exception">Invalid response format</string>
     <string name="http_exception">"Connection problem, check your connection and try again"</string>
     <string name="http_error">Server Problem, Try again</string>
+    <string name="comments_parser_error">Failed to get comments, parser error</string>
+    <string name="comments_http_error">Failed to get comments, server error</string>
+    <string name="comments_http_exception">Failed to get comments, Connection error</string>
 
 </resources>

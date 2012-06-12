@@ -7,8 +7,6 @@ import android.os.Bundle;
 
 public class DialogShareTwitter extends BaseDialog {
 
-	// private final String TWITTER_BASE_URL =
-	// "http://twitter.com/?status=Check+out+this+photo!+";
 	private final String TWITTER_BASE_URL = "http://twitter.com/?status=%s";
 	private final String shortcut;
 

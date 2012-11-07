@@ -8,30 +8,33 @@ import com.chute.android.gallery.util.AnimationFactory;
 
 public class AnimatedSwitcher extends ViewSwitcher {
 
-    private static final int DEFAULT_DURATION = 150;
-    public static final String TAG = AnimatedSwitcher.class.getSimpleName();
+	private static final int DEFAULT_DURATION = 150;
+	public static final String TAG = AnimatedSwitcher.class.getSimpleName();
 
-    public AnimatedSwitcher(Context context, AttributeSet attrs) {
-	super(context, attrs);
-    }
+	public AnimatedSwitcher(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 
-    public AnimatedSwitcher(Context context) {
-	super(context);
-    }
+	public AnimatedSwitcher(Context context) {
+		super(context);
+	}
 
-    @Override
-    public void showNext() {
+	@Override
+	public void showNext() {
+		this.setInAnimation(AnimationFactory
+				.getSlideInLeftAnimation(DEFAULT_DURATION));
+		this.setOutAnimation(AnimationFactory
+				.getSlideOutLeftAnimation(DEFAULT_DURATION));
+		super.showNext();
+	}
 
-	this.setInAnimation(AnimationFactory.getSlideInLeftAnimation(DEFAULT_DURATION));
-	this.setOutAnimation(AnimationFactory.getSlideOutLeftAnimation(DEFAULT_DURATION));
-	super.showNext();
-    }
-
-    @Override
-    public void showPrevious() {
-	this.setInAnimation(AnimationFactory.getSlideInRightAnimation(DEFAULT_DURATION));
-	this.setOutAnimation(AnimationFactory.getSlideOutRightAnimation(DEFAULT_DURATION));
-	super.showPrevious();
-    }
+	@Override
+	public void showPrevious() {
+		this.setInAnimation(AnimationFactory
+				.getSlideInRightAnimation(DEFAULT_DURATION));
+		this.setOutAnimation(AnimationFactory
+				.getSlideOutRightAnimation(DEFAULT_DURATION));
+		super.showPrevious();
+	}
 
 }

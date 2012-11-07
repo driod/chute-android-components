@@ -4,11 +4,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.chute.android.gallery.R;
 import com.chute.android.gallery.util.GalleryThreadPoolExecutor;
 import com.chute.android.gallery.zoom.ImageZoomView;
 import com.chute.android.gallery.zoom.PinchZoomListener.GestureEvent;
@@ -56,9 +59,11 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		final OnMotionEventListenerImplementation motionEventListener = new OnMotionEventListenerImplementation();
 
 		final ImageZoomView viewOne = new ImageZoomView(getContext());
+		viewOne.setImageResource(R.drawable.placeholder_image_large);
 		viewOne.setOnMotionEventListener(motionEventListener);
 		this.addView(viewOne);
 		final ImageZoomView viewTwo = new ImageZoomView(getContext());
+		viewTwo.setImageResource(R.drawable.placeholder_image_large);
 		viewTwo.setOnMotionEventListener(motionEventListener);
 		this.addView(viewTwo);
 		handler = new Handler();
@@ -77,8 +82,8 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 			displayLargePhoto(collection.get(index).getUrl());
 			triggerPhotoChangedCallback();
 		} else {
-			Toast.makeText(getContext(), "No photos in this chute", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(getContext(), "No photos in this chute",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -100,6 +105,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		super.showNext();
 		displayLargePhoto(collection.get(index).getUrl());
 		triggerPhotoChangedCallback();
+
 	}
 
 	@Override
@@ -134,6 +140,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		Log.d(TAG, "in display large photo");
 		displayCurrentPhoto(null);
 		executor.runTask(GCUtils.getCustomSizePhotoURL(url, 960, 960));
+		executor.deleteCachedImage(GCUtils.getCustomSizePhotoURL(url, 960, 960));
 	}
 
 	public void displayCurrentPhoto(String url) {
@@ -202,6 +209,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 					@Override
 					public void run() {
 						displayCurrentPhoto((String) data);
+						executor.deleteCachedImage((String) data);
 					}
 				});
 

@@ -2,11 +2,11 @@ package com.chute.android.gallery.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ViewSwitcher;
+import android.widget.ViewFlipper;
 
 import com.chute.android.gallery.util.AnimationFactory;
 
-public class AnimatedSwitcher extends ViewSwitcher {
+public class AnimatedSwitcher extends ViewFlipper {
 
 	private static final int DEFAULT_DURATION = 150;
 	public static final String TAG = AnimatedSwitcher.class.getSimpleName();

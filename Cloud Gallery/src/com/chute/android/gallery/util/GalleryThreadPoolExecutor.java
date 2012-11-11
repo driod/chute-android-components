@@ -41,6 +41,10 @@ public class GalleryThreadPoolExecutor extends Observable {
 	public void setDownloading(boolean isDownloading) {
 		this.isDownloading = isDownloading;
 	}
+	
+	public FileCache getFileCache() {
+		return fileCache;
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	final PriorityBlockingQueue<Runnable> queue = new PriorityBlockingQueue<Runnable>(

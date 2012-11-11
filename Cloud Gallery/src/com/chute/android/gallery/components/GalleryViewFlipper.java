@@ -4,11 +4,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chute.android.gallery.R;
@@ -56,16 +54,6 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 	}
 
 	private void init() {
-		final OnMotionEventListenerImplementation motionEventListener = new OnMotionEventListenerImplementation();
-
-		final ImageZoomView viewOne = new ImageZoomView(getContext());
-		viewOne.setImageResource(R.drawable.placeholder_image_large);
-		viewOne.setOnMotionEventListener(motionEventListener);
-		this.addView(viewOne);
-		final ImageZoomView viewTwo = new ImageZoomView(getContext());
-		viewTwo.setImageResource(R.drawable.placeholder_image_large);
-		viewTwo.setOnMotionEventListener(motionEventListener);
-		this.addView(viewTwo);
 		handler = new Handler();
 		executor = new GalleryThreadPoolExecutor(getContext());
 		executor.addObserver(new ObserverImplementation());
@@ -79,6 +67,13 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		this.collection = collection;
 		this.index = index;
 		if (collection.size() > 0) {
+			for (int i = 0; i < collection.size(); i++) {
+				final OnMotionEventListenerImplementation motionEventListener = new OnMotionEventListenerImplementation();
+				final ImageZoomView view = new ImageZoomView(getContext());
+				view.setImageResource(R.drawable.placeholder_image_large);
+				view.setOnMotionEventListener(motionEventListener);
+				this.addView(view);
+			}
 			displayLargePhoto(collection.get(index).getUrl());
 			triggerPhotoChangedCallback();
 		} else {
@@ -103,6 +98,8 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		}
 		index++;
 		super.showNext();
+		getCurrentView().setImageDrawable(
+				getResources().getDrawable(R.drawable.placeholder_image_large));
 		displayLargePhoto(collection.get(index).getUrl());
 		triggerPhotoChangedCallback();
 
@@ -140,7 +137,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		Log.d(TAG, "in display large photo");
 		displayCurrentPhoto(null);
 		executor.runTask(GCUtils.getCustomSizePhotoURL(url, 960, 960));
-		executor.deleteCachedImage(GCUtils.getCustomSizePhotoURL(url, 960, 960));
+		executor.runTask(GCUtils.getCustomSizePhotoURL(url, 960, 960));
 	}
 
 	public void displayCurrentPhoto(String url) {
@@ -208,8 +205,8 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 
 					@Override
 					public void run() {
+						Log.d(TAG, "Observer");
 						displayCurrentPhoto((String) data);
-						executor.deleteCachedImage((String) data);
 					}
 				});
 

@@ -16,12 +16,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.chute.android.gallery.R;
-import com.chute.sdk.utils.GCUtils;
-import com.darko.imagedownloader.BlockingFilterInputStream;
-import com.darko.imagedownloader.ContentURLStreamHandlerFactory;
-import com.darko.imagedownloader.FileCache;
-import com.darko.imagedownloader.ImageLoader;
-import com.darko.imagedownloader.Utils;
+import com.chute.sdk.v2.utils.Utils;
+
+import darko.imagedownloader.BlockingFilterInputStream;
+import darko.imagedownloader.ContentURLStreamHandlerFactory;
+import darko.imagedownloader.FileCache;
+import darko.imagedownloader.ImageLoader;
 
 public class GalleryThreadPoolExecutor extends Observable {
 
@@ -41,7 +41,7 @@ public class GalleryThreadPoolExecutor extends Observable {
 	public void setDownloading(boolean isDownloading) {
 		this.isDownloading = isDownloading;
 	}
-	
+
 	public FileCache getFileCache() {
 		return fileCache;
 	}
@@ -58,7 +58,7 @@ public class GalleryThreadPoolExecutor extends Observable {
 		threadPool = new ThreadPoolExecutor(poolSize, maxPoolSize,
 				keepAliveTime, TimeUnit.SECONDS, queue);
 		loader = new ImageLoader(context, R.drawable.placeholder_image_large);
-		loader.setDefaultBitmapSize(GCUtils.pixelsFromDp(context, 320));
+		loader.setDefaultBitmapSize(Utils.pixelsFromDp(context, 320));
 		// loader.setOnlyFromCache(true);
 		fileCache = new FileCache(context);
 		streamFactory = new ContentURLStreamHandlerFactory(
@@ -116,7 +116,8 @@ public class GalleryThreadPoolExecutor extends Observable {
 
 		public void downloadFile(final File f, final String url)
 				throws MalformedURLException, IOException {
-			final String protocol = Utils.getProtocol(url);
+			final String protocol = darko.imagedownloader.Utils
+					.getProtocol(url);
 			final URLStreamHandler streamHandler = streamFactory
 					.createURLStreamHandler(protocol);
 

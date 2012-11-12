@@ -1,5 +1,6 @@
 package com.chute.android.gallery.components;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,9 +15,8 @@ import com.chute.android.gallery.util.GalleryThreadPoolExecutor;
 import com.chute.android.gallery.zoom.ImageZoomView;
 import com.chute.android.gallery.zoom.PinchZoomListener.GestureEvent;
 import com.chute.android.gallery.zoom.PinchZoomListener.OnMotionEventListener;
-import com.chute.sdk.collections.GCAssetCollection;
-import com.chute.sdk.model.GCAssetModel;
-import com.chute.sdk.utils.GCUtils;
+import com.chute.sdk.v2.model.AssetModel;
+import com.chute.sdk.v2.utils.Utils;
 
 /**
  * @author DArkO.Grozdanovski
@@ -28,7 +28,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 	private int index;
 
 	private GalleryCallback galleryCallback;
-	private GCAssetCollection collection;
+	private List<AssetModel> collection;
 	private GalleryThreadPoolExecutor executor;
 	private Handler handler;
 
@@ -38,7 +38,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 
 	public interface GalleryCallback extends OnMotionEventListener {
 
-		public void onPhotoChanged(int index, GCAssetModel asset);
+		public void onPhotoChanged(int index, AssetModel asset);
 
 		public void onPhotoChangeError(PhotoChangeErrorType error);
 	}
@@ -63,7 +63,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		this.galleryCallback = galleryCallback;
 	}
 
-	public void setAssetCollection(GCAssetCollection collection, int index) {
+	public void setAssetCollection(List<AssetModel> collection, int index) {
 		this.collection = collection;
 		this.index = index;
 		if (collection.size() > 0) {
@@ -82,11 +82,11 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		}
 	}
 
-	public void setAssetCollection(GCAssetCollection collection) {
+	public void setAssetCollection(List<AssetModel> collection) {
 		setAssetCollection(collection, 0);
 	}
 
-	public GCAssetCollection getAssetCollection() {
+	public List<AssetModel> getAssetCollection() {
 		return collection;
 	}
 
@@ -129,15 +129,15 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		}
 	}
 
-	public GCAssetModel getSelectedItem() {
+	public AssetModel getSelectedItem() {
 		return collection.get(index);
 	}
 
 	private void displayLargePhoto(String url) {
 		Log.d(TAG, "in display large photo");
 		displayCurrentPhoto(null);
-		executor.runTask(GCUtils.getCustomSizePhotoURL(url, 960, 960));
-		executor.runTask(GCUtils.getCustomSizePhotoURL(url, 960, 960));
+		executor.runTask(Utils.getCustomSizePhotoURL(url, 960, 960));
+		executor.runTask(Utils.getCustomSizePhotoURL(url, 960, 960));
 	}
 
 	public void displayCurrentPhoto(String url) {
@@ -145,7 +145,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 	}
 
 	public boolean isCurrentlySelectedPhoto(String url) {
-		return url.contentEquals(GCUtils.getCustomSizePhotoURL(
+		return url.contentEquals(Utils.getCustomSizePhotoURL(
 				collection.get(index).getUrl(), 960, 960));
 	}
 

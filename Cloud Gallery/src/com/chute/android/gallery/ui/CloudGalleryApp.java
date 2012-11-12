@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.chute.android.gallery.R;
+import com.chute.sdk.model.GCAccountStore;
 import com.chute.sdk.utils.GCUtils;
 import com.darko.imagedownloader.ImageLoader;
 
@@ -23,6 +24,7 @@ public class CloudGalleryApp extends Application {
     @Override
     public void onCreate() {
 	super.onCreate();
+	GCAccountStore.setAppId(getApplicationContext(), "4f15d1f138ecef6af9000004");
 	mImageLoader = createImageLoader(getApplicationContext());
     }
 

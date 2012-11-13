@@ -10,11 +10,11 @@ import android.widget.Button;
 import com.chute.android.gallery.R;
 import com.chute.sdk.v2.model.AccountStore;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class CloudGalleryActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
 
 	@SuppressWarnings("unused")
-	private static final String TAG = MainActivity.class.getSimpleName();
+	private static final String TAG = CloudGalleryActivity.class.getSimpleName();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

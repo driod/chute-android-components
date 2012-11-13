@@ -27,7 +27,7 @@ public class CloudGalleryApp extends Application {
 	public void onCreate() {
 		super.onCreate();
 		AccountStore.setAppId(getApplicationContext(),
-				"4f15d1f138ecef6af9000004");
+				"46b7c778447e18ee5865a83f4202f42a2f85283c47ef24541366509235d8eccf");
 		mImageLoader = createImageLoader(getApplicationContext());
 	}
 

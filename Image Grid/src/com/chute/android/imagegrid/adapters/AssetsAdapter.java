@@ -1,5 +1,7 @@
 package com.chute.android.imagegrid.adapters;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,22 +10,22 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.chute.android.imagegrid.R;
-import com.chute.sdk.collections.GCAssetCollection;
-import com.chute.sdk.model.GCAssetModel;
-import com.chute.sdk.utils.GCUtils;
-import com.darko.imagedownloader.ImageLoader;
+import com.chute.sdk.v2.model.AssetModel;
+import com.chute.sdk.v2.utils.Utils;
 
-public class AssetCollectionAdapter extends BaseAdapter {
+import darko.imagedownloader.ImageLoader;
+
+public class AssetsAdapter extends BaseAdapter {
 
 	@SuppressWarnings("unused")
-	private static final String TAG = AssetCollectionAdapter.class
+	private static final String TAG = AssetsAdapter.class
 			.getSimpleName();
 	private static LayoutInflater inflater = null;
-	private final GCAssetCollection collection;
+	private final List<AssetModel> collection;
 	public ImageLoader imageLoader;
 
-	public AssetCollectionAdapter(Context context,
-			final GCAssetCollection collection) {
+	public AssetsAdapter(Context context,
+			final List<AssetModel> collection) {
 		this.collection = collection;
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -36,7 +38,7 @@ public class AssetCollectionAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public GCAssetModel getItem(int position) {
+	public AssetModel getItem(int position) {
 		return collection.get(position);
 	}
 
@@ -62,7 +64,7 @@ public class AssetCollectionAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) vi.getTag();
 		}
-		imageLoader.displayImage(GCUtils.getCustomSizePhotoURL(
+		imageLoader.displayImage(Utils.getCustomSizePhotoURL(
 				collection.get(position).getUrl(), 100, 100), holder.image);
 		return vi;
 	}

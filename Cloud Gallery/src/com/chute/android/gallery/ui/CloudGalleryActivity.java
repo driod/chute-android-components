@@ -9,19 +9,23 @@ import android.widget.Button;
 
 import com.chute.android.gallery.R;
 import com.chute.sdk.v2.model.AccountStore;
+import com.dg.libs.rest.authentication.TokenAuthenticationProvider;
 
 public class CloudGalleryActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
 
 	@SuppressWarnings("unused")
-	private static final String TAG = CloudGalleryActivity.class.getSimpleName();
+	private static final String TAG = CloudGalleryActivity.class
+			.getSimpleName();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// Test token, see GCAuthentication activity on how to authenticate
+		TokenAuthenticationProvider.init(getApplicationContext());
+
+		// Test token, see AuthenticationActivity on how to authenticate
 		AccountStore account = AccountStore
 				.getInstance(getApplicationContext());
 		account.setPassword("46b7c778447e18ee5865a83f4202f42a2f85283c47ef24541366509235d8eccf");

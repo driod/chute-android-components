@@ -11,7 +11,8 @@ import android.widget.Toast;
 import com.chute.android.imagegrid.R;
 import com.chute.android.imagegrid.adapters.AssetsAdapter;
 import com.chute.android.imagegrid.intent.ImageGridIntentWrapper;
-import com.chute.sdk.v2.api.asset.GCAssets;
+import com.chute.sdk.v2.api.album.GCAlbums;
+import com.chute.sdk.v2.model.AlbumModel;
 import com.chute.sdk.v2.model.AssetModel;
 import com.chute.sdk.v2.model.requests.ListResponseModel;
 import com.dg.libs.rest.callbacks.HttpCallback;
@@ -20,6 +21,7 @@ import com.dg.libs.rest.domain.ResponseStatus;
 public class ImageGridActivity extends Activity {
 
 	public static final String TAG = ImageGridActivity.class.getSimpleName();
+	private AlbumModel album;
 	private GridView grid;
 	private AssetsAdapter adapter;
 
@@ -31,8 +33,10 @@ public class ImageGridActivity extends Activity {
 		grid = (GridView) findViewById(R.id.gridView);
 		final ImageGridIntentWrapper wrapper = new ImageGridIntentWrapper(
 				getIntent());
-		GCAssets.all(getApplicationContext(), new AssetsCallback())
-				.executeAsync();
+		album = new AlbumModel();
+		album.setId(wrapper.getAlbumId());
+		GCAlbums.getAllAssets(getApplicationContext(), album,
+				new AssetsCallback()).executeAsync();
 	}
 
 	private final class AssetsCallback implements

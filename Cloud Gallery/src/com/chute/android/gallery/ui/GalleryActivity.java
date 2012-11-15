@@ -6,7 +6,8 @@ import android.util.Log;
 
 import com.chute.android.gallery.R;
 import com.chute.android.gallery.components.GalleryViewFlipper;
-import com.chute.sdk.v2.api.asset.GCAssets;
+import com.chute.sdk.v2.api.album.GCAlbums;
+import com.chute.sdk.v2.model.AlbumModel;
 import com.chute.sdk.v2.model.AssetModel;
 import com.chute.sdk.v2.model.requests.ListResponseModel;
 import com.dg.libs.rest.callbacks.HttpCallback;
@@ -16,29 +17,34 @@ public class GalleryActivity extends Activity {
 
 	protected static final String TAG = GalleryActivity.class.getSimpleName();
 	private GalleryViewFlipper galleryView;
-	@SuppressWarnings("unused")
 	private final String albumId = "1946";
+	private AlbumModel album;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gallery_activity);
 		galleryView = (GalleryViewFlipper) findViewById(R.id.galleryView);
-		GCAssets.all(getApplicationContext(),
-				new HttpCallback<ListResponseModel<AssetModel>>() {
+		album = new AlbumModel();
+		album.setId(albumId);
+		GCAlbums.getAllAssets(getApplicationContext(), album,
+				new AlbumGetAssetsCallback()).executeAsync();
 
-					@Override
-					public void onSuccess(
-							ListResponseModel<AssetModel> responseData) {
-						galleryView.setAssetCollection(responseData.getData());
-					}
+	}
 
-					@Override
-					public void onHttpError(ResponseStatus responseCode) {
-                      Log.d("debug", "http error = " + responseCode.getStatusMessage());
-					}
+	private final class AlbumGetAssetsCallback implements
+			HttpCallback<ListResponseModel<AssetModel>> {
 
-				}).executeAsync();
+		@Override
+		public void onSuccess(ListResponseModel<AssetModel> responseData) {
+			galleryView.setAssetCollection(responseData.getData());
+		}
+
+		@Override
+		public void onHttpError(ResponseStatus responseCode) {
+			Log.d(TAG, "Error occured : " + responseCode.getStatusCode() + " "
+					+ responseCode.getStatusMessage());
+		}
 
 	}
 

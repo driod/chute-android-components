@@ -57,7 +57,7 @@ public class ShareActivity extends Activity {
 	@Override
 	public void onClick(View v) {
 	    String body = getString(R.string.share_email_body);
-	    body = String.format(body, wrapper.getChuteName(), wrapper.getAssetShareUrl());
+	    body = String.format(body, wrapper.getAlbumName(), wrapper.getAssetShareUrl());
 	    IntentUtil.sendEmail(v.getContext(), null, null, body);
 	}
     }

@@ -11,10 +11,10 @@ public class ShareActivityIntentWrapper {
 	public static final String TAG = ShareActivityIntentWrapper.class
 			.getSimpleName();
 
-	private static final String EXTRA_CHUTE_SHORTCUT = "extra_chute_shortcut";
+	private static final String EXTRA_ALBUM_SHORTCUT = "extra_album_shortcut";
 	private static final String EXTRA_ASSET_SHARE_URL = "extra_asset_share_url";
-	private static final String EXTRA_CHUTE_NAME = "key_chute_name";
-	private static final String EXTRA_CHUTE_ID = "chuteId";
+	private static final String EXTRA_ALBUM_NAME = "key_album_name";
+	private static final String EXTRA_ALBUM_ID = "albumId";
 
 	private final Intent intent;
 
@@ -33,38 +33,38 @@ public class ShareActivityIntentWrapper {
 		intent = new Intent(packageContext, ShareActivity.class);
 	}
 
-	public void setChuteId(String id) {
-		intent.putExtra(EXTRA_CHUTE_ID, id);
+	public void setAlbumId(String id) {
+		intent.putExtra(EXTRA_ALBUM_ID, id);
 	}
 
 	public Intent getIntent() {
 		return intent;
 	}
 
-	public String getChuteId() {
-		return intent.getExtras().getString(EXTRA_CHUTE_ID);
+	public String getAlbumId() {
+		return intent.getExtras().getString(EXTRA_ALBUM_ID);
 	}
 
-	public void setChuteName(String name) {
-		intent.putExtra(EXTRA_CHUTE_NAME, name);
+	public void setAlbumName(String name) {
+		intent.putExtra(EXTRA_ALBUM_NAME, name);
 	}
 
-	public String getChuteName() {
-		return intent.getExtras().getString(EXTRA_CHUTE_NAME);
+	public String getAlbumName() {
+		return intent.getExtras().getString(EXTRA_ALBUM_NAME);
 	}
 
-	public void setChuteShortcut(String shortcut) {
-		intent.putExtra(EXTRA_CHUTE_SHORTCUT, shortcut);
+	public void setAlbumShortcut(String shortcut) {
+		intent.putExtra(EXTRA_ALBUM_SHORTCUT, shortcut);
 	}
 
-	public String getChuteShortcut() {
-		return intent.getExtras().getString(EXTRA_CHUTE_SHORTCUT);
+	public String getAlbumShortcut() {
+		return intent.getExtras().getString(EXTRA_ALBUM_SHORTCUT);
 	}
-	
+
 	public void setAssetShareUrl(String url) {
 		intent.putExtra(EXTRA_ASSET_SHARE_URL, url);
 	}
-	
+
 	public String getAssetShareUrl() {
 		return intent.getExtras().getString(EXTRA_ASSET_SHARE_URL);
 	}

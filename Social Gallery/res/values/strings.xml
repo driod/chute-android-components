@@ -3,7 +3,7 @@
 
     <string name="hello">Hello World, SocialGalleryActivity!</string>
     <string name="app_name">Social Gallery</string>
-    <string name="no_photos_in_this_chute">No photos in this chute</string>
+    <string name="no_photos_in_this_album">No photos in this album</string>
     <string name="comments_added">Comments added!</string>
     <string name="no_comments_added">No comments added!</string>
     <string name="parsing_exception">Invalid response format</string>

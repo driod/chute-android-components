@@ -11,9 +11,9 @@ public class SocialGalleryActivityIntentWrapper {
 	public static final String TAG = SocialGalleryActivityIntentWrapper.class
 			.getSimpleName();
 
-	private static final String EXTRA_KEY_CHUTE_ID = "chuteId";
-	private static final String EXTRA_KEY_CHUTE_NAME = "chuteName";
-	private static final String EXTRA_KEY_CHUTE_SHORTCUT = "chuteShortcut";
+	private static final String EXTRA_KEY_ALBUM_ID = "albumId";
+	private static final String EXTRA_KEY_ALBUM_NAME = "albumName";
+	private static final String EXTRA_KEY_ALBUM_SHORTCUT = "albumShortcut";
 
 	private final Intent intent;
 
@@ -33,32 +33,32 @@ public class SocialGalleryActivityIntentWrapper {
 		intent = new Intent(packageContext, SocialGalleryActivity.class);
 	}
 
-	public void setChuteId(String id) {
-		intent.putExtra(EXTRA_KEY_CHUTE_ID, id);
+	public void setAlbumId(String id) {
+		intent.putExtra(EXTRA_KEY_ALBUM_ID, id);
 	}
 
 	public Intent getIntent() {
 		return intent;
 	}
 
-	public String getChuteId() {
-		return intent.getExtras().getString(EXTRA_KEY_CHUTE_ID);
+	public String getAlbumId() {
+		return intent.getExtras().getString(EXTRA_KEY_ALBUM_ID);
 	}
 
-	public void setChuteName(String name) {
-		intent.putExtra(EXTRA_KEY_CHUTE_NAME, name);
+	public void setAlbumName(String name) {
+		intent.putExtra(EXTRA_KEY_ALBUM_NAME, name);
 	}
 
-	public String getChuteName() {
-		return intent.getExtras().getString(EXTRA_KEY_CHUTE_NAME);
+	public String getAlbumName() {
+		return intent.getExtras().getString(EXTRA_KEY_ALBUM_NAME);
 	}
 
-	public void setChuteShortcut(String shortcut) {
-		intent.putExtra(EXTRA_KEY_CHUTE_SHORTCUT, shortcut);
+	public void setAlbumShortcut(String shortcut) {
+		intent.putExtra(EXTRA_KEY_ALBUM_SHORTCUT, shortcut);
 	}
 
-	public String getChuteShortcut() {
-		return intent.getExtras().getString(EXTRA_KEY_CHUTE_SHORTCUT);
+	public String getAlbumShortcut() {
+		return intent.getExtras().getString(EXTRA_KEY_ALBUM_SHORTCUT);
 	}
 
 	public void startActivity(Activity context) {

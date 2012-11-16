@@ -1,10 +1,13 @@
 package com.chute.android.comments.app;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,16 +20,16 @@ import com.chute.android.comments.R;
 import com.chute.android.comments.adapters.PhotoCommentsAdapter;
 import com.chute.android.comments.util.intent.PhotoCommentsActivityIntentWrapper;
 import com.chute.android.comments.util.intent.MainActivityIntentWrapper;
-import com.chute.sdk.api.GCHttpCallback;
-import com.chute.sdk.api.comment.GCComments;
-import com.chute.sdk.collections.GCCommentCollection;
-import com.chute.sdk.model.GCCommentModel;
-import com.chute.sdk.model.GCHttpRequestParameters;
-import com.chute.sdk.parsers.GCCommentListObjectParser;
-import com.chute.sdk.parsers.GCCommentSingleObjectParser;
+import com.chute.sdk.v2.api.comment.GCComments;
+import com.chute.sdk.v2.model.AlbumModel;
+import com.chute.sdk.v2.model.AssetModel;
+import com.chute.sdk.v2.model.CommentModel;
+import com.chute.sdk.v2.model.requests.ListResponseModel;
+import com.chute.sdk.v2.model.requests.ResponseModel;
+import com.dg.libs.rest.callbacks.HttpCallback;
+import com.dg.libs.rest.domain.ResponseStatus;
 
 public class PhotoCommentsActivity extends Activity {
-	@SuppressWarnings("unused")
 	private static final String TAG = PhotoCommentsActivity.class
 			.getSimpleName();
 	private ListView listView;
@@ -34,6 +37,9 @@ public class PhotoCommentsActivity extends Activity {
 	private EditText comment;
 	private PhotoCommentsActivityIntentWrapper wrapper;
 	private PhotoCommentsAdapter adapter;
+	private List<CommentModel> commentList;
+	private AlbumModel album = new AlbumModel();
+	private AssetModel asset = new AssetModel();
 
 	private int commentAddedCount = 0;
 
@@ -45,16 +51,17 @@ public class PhotoCommentsActivity extends Activity {
 		listView.setCacheColorHint(Color.TRANSPARENT);
 		listView.setDivider(null);
 		listView.setDividerHeight(25);
-		adapter = new PhotoCommentsAdapter(this, new GCCommentCollection());
+		adapter = new PhotoCommentsAdapter(this, commentList);
 		listView.setAdapter(adapter);
 		titleView = (TextView) findViewById(R.id.titleView);
 
 		wrapper = new PhotoCommentsActivityIntentWrapper(getIntent());
+		album.setId(wrapper.getAlbumId());
+		asset.setId(wrapper.getAssetId());
 
-		GCComments.get(getApplicationContext(), wrapper.getChuteId(),
-				wrapper.getAssetId(), new GCCommentListObjectParser(),
-				new CommentCollectionCallback()).executeAsync();
-		titleView.setText(wrapper.getChuteName());
+		GCComments.get(getApplicationContext(), album, asset,
+				new CommentsCallback()).executeAsync();
+		titleView.setText(wrapper.getAlbumName());
 
 		comment = (EditText) findViewById(R.id.editTextComment);
 		Button save = (Button) findViewById(R.id.buttonSave);
@@ -73,72 +80,50 @@ public class PhotoCommentsActivity extends Activity {
 						.show();
 				return;
 			}
-			GCComments.add(getApplicationContext(), wrapper.getChuteId(),
-					wrapper.getAssetId(), comment,
-					new GCCommentSingleObjectParser(),
+			GCComments.create(getApplicationContext(), album, asset,
 					new CommentsAddCallback()).executeAsync();
 			PhotoCommentsActivity.this.comment.getText().clear();
 		}
 	}
 
 	private final class CommentsAddCallback implements
-			GCHttpCallback<GCCommentModel> {
+			HttpCallback<ResponseModel<CommentModel>> {
+
 		@Override
-		public void onSuccess(GCCommentModel responseData) {
-			adapter.addComment(responseData);
+		public void onSuccess(ResponseModel<CommentModel> responseData) {
+			adapter.addComment(responseData.getData());
 			Toast.makeText(getApplicationContext(),
 					R.string.toast_comment_added, Toast.LENGTH_SHORT).show();
 			commentAddedCount++;
+
 		}
 
 		@Override
-		public void onHttpException(GCHttpRequestParameters params,
-				Throwable exception) {
-			Toast.makeText(getApplicationContext(), R.string.http_exception,
-					Toast.LENGTH_SHORT).show();
+		public void onHttpError(ResponseStatus responseCode) {
+			Log.d(TAG, "Http Error: " + responseCode.getStatusMessage());
+			Toast.makeText(getApplicationContext(),
+					R.string.comments_http_error, Toast.LENGTH_SHORT).show();
+
 		}
 
-		@Override
-		public void onHttpError(int responseCode, String statusMessage) {
-			Toast.makeText(getApplicationContext(), R.string.http_error,
-					Toast.LENGTH_SHORT).show();
-		}
-
-		@Override
-		public void onParserException(int responseCode, Throwable exception) {
-			Toast.makeText(getApplicationContext(), R.string.parsing_exception,
-					Toast.LENGTH_SHORT).show();
-		}
 	}
 
-	private final class CommentCollectionCallback implements
-			GCHttpCallback<GCCommentCollection> {
+	private final class CommentsCallback implements
+			HttpCallback<ListResponseModel<CommentModel>> {
+
 		@Override
-		public void onSuccess(GCCommentCollection responseData) {
-			adapter.changeData(responseData);
+		public void onSuccess(ListResponseModel<CommentModel> responseData) {
+			adapter.changeData(responseData.getData());
 		}
 
 		@Override
-		public void onHttpException(GCHttpRequestParameters params,
-				Throwable exception) {
+		public void onHttpError(ResponseStatus responseCode) {
+			Log.d(TAG, "Http Error: " + responseCode.getStatusMessage());
 			Toast.makeText(getApplicationContext(),
-					R.string.comments_http_exception, Toast.LENGTH_SHORT)
-					.show();
+					R.string.comments_http_error, Toast.LENGTH_SHORT).show();
+
 		}
 
-		@Override
-		public void onHttpError(int responseCode, String statusMessage) {
-			Toast.makeText(
-					getApplicationContext(),
-					R.string.comments_http_error + responseCode + " "
-							+ statusMessage, Toast.LENGTH_SHORT).show();
-		}
-
-		@Override
-		public void onParserException(int responseCode, Throwable exception) {
-			Toast.makeText(getApplicationContext(),
-					R.string.comments_parser_error, Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	@Override

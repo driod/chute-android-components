@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.chute.android.gcchutelisting.R;
 import com.chute.android.gcchutelisting.adapters.GalleryListingAdapter;
@@ -18,7 +17,6 @@ import com.dg.libs.rest.domain.ResponseStatus;
 
 public class GalleryListingActivity extends Activity {
 
-	@SuppressWarnings("unused")
 	private static final String TAG = GalleryListingActivity.class
 			.getSimpleName();
 	private GalleryListingAdapter adapter;
@@ -32,7 +30,8 @@ public class GalleryListingActivity extends Activity {
 		listView = (ListView) findViewById(R.id.albumList);
 		user = new UserModel();
 		user.setId(Constants.CURRENT_USER_ID);
-		GCUsers.getAlbums(getApplicationContext(), user, new UserAlbumsCallback()).executeAsync();
+		GCUsers.getAlbums(getApplicationContext(), user,
+				new UserAlbumsCallback()).executeAsync();
 
 	}
 
@@ -44,15 +43,15 @@ public class GalleryListingActivity extends Activity {
 			adapter = new GalleryListingAdapter(GalleryListingActivity.this,
 					responseData.getData());
 			listView.setAdapter(adapter);
-			
+
 		}
 
 		@Override
 		public void onHttpError(ResponseStatus responseCode) {
-			Log.d(TAG, "Http Error: " + responseCode.getStatusCode() + " " + responseCode.getStatusMessage());
+			Log.d(TAG, "Http Error: " + responseCode.getStatusCode() + " "
+					+ responseCode.getStatusMessage());
 		}
-		
-	}
 
+	}
 
 }

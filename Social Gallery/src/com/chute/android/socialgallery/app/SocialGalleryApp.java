@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.chute.android.socialgallery.R;
 import com.chute.sdk.v2.utils.Utils;
+import com.dg.libs.rest.authentication.TokenAuthenticationProvider;
+import com.dg.libs.rest.client.BaseRestClient;
 
 import darko.imagedownloader.ImageLoader;
 
@@ -24,6 +26,12 @@ public class SocialGalleryApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		TokenAuthenticationProvider.init(getApplicationContext());
+		TokenAuthenticationProvider provider = TokenAuthenticationProvider
+				.getInstance();
+		// Test token
+		provider.setToken("46b7c778447e18ee5865a83f4202f42a2f85283c47ef24541366509235d8eccf");
+		BaseRestClient.setDefaultAuthenticationProvider(provider);
 		mImageLoader = createImageLoader(getApplicationContext());
 	}
 

@@ -25,7 +25,7 @@
         </activity>
         <activity android:name=".app.ShareActivity" >
         </activity>
-        <activity android:name="com.chute.sdk.api.authentication.GCAuthenticationActivitytion.GCAuthenticationActivity"
+        <activity android:name="com.chute.sdkv2..api.authentication.AuthenticationActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>

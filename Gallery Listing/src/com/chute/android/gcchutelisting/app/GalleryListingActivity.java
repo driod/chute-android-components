@@ -7,11 +7,9 @@ import android.widget.ListView;
 
 import com.chute.android.gcchutelisting.R;
 import com.chute.android.gcchutelisting.adapters.GalleryListingAdapter;
-import com.chute.sdk.v2.api.user.GCUsers;
+import com.chute.sdk.v2.api.album.GCAlbums;
 import com.chute.sdk.v2.model.AlbumModel;
-import com.chute.sdk.v2.model.UserModel;
 import com.chute.sdk.v2.model.requests.ListResponseModel;
-import com.chute.sdk.v2.utils.Constants;
 import com.dg.libs.rest.callbacks.HttpCallback;
 import com.dg.libs.rest.domain.ResponseStatus;
 
@@ -21,21 +19,18 @@ public class GalleryListingActivity extends Activity {
 			.getSimpleName();
 	private GalleryListingAdapter adapter;
 	public ListView listView;
-	private UserModel user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.chute_list);
+		setContentView(R.layout.album_list);
 		listView = (ListView) findViewById(R.id.albumList);
-		user = new UserModel();
-		user.setId(Constants.CURRENT_USER_ID);
-		GCUsers.getAlbums(getApplicationContext(), user,
-				new UserAlbumsCallback()).executeAsync();
+		GCAlbums.all(getApplicationContext(), new AlbumsCallback())
+				.executeAsync();
 
 	}
 
-	private final class UserAlbumsCallback implements
+	private final class AlbumsCallback implements
 			HttpCallback<ListResponseModel<AlbumModel>> {
 
 		@Override

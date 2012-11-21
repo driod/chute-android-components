@@ -35,7 +35,7 @@ public class ImageGridActivity extends Activity {
 				getIntent());
 		album = new AlbumModel();
 		album.setId(wrapper.getAlbumId());
-		GCAlbums.getAllAssets(getApplicationContext(), album,
+		GCAlbums.Assets.all(getApplicationContext(), album,
 				new AssetsCallback()).executeAsync();
 	}
 

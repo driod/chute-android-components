@@ -45,7 +45,7 @@ public class SocialGalleryActivity extends Activity {
 		share.setOnClickListener(new ShareClickListener());
 
 		album.setId(wrapper.getAlbumId());
-		GCAlbums.getAllAssets(getApplicationContext(), album,
+		GCAlbums.Assets.all(getApplicationContext(), album,
 				new AlbumAssetsCallback()).executeAsync();
 
 	}

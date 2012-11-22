@@ -7,7 +7,7 @@ public class Constants {
 	public static final String ALBUM_ID = "1946";
 	public static final String ALBUM_NAME = "Chute HQ";
 	public static final String ALBUM_SHORTCUT = "volvqd";
-	public static final String ASSET_ID = "5867";
+	public static final String ASSET_ID = "5856";
     public static final String TWITTER_STATUS = "Check out this photo! ";
     public static final int ACTIVITY_FOR_RESULT_KEY = 112;
 }

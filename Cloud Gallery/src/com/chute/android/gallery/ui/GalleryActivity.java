@@ -27,7 +27,7 @@ public class GalleryActivity extends Activity {
 		galleryView = (GalleryViewFlipper) findViewById(R.id.galleryView);
 		album = new AlbumModel();
 		album.setId(albumId);
-		GCAlbums.Assets.all(getApplicationContext(), album,
+		GCAlbums.Assets.list(getApplicationContext(), album,
 				new AlbumGetAssetsCallback()).executeAsync();
 
 	}

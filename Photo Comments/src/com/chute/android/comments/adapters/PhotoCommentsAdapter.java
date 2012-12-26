@@ -91,12 +91,12 @@ public class PhotoCommentsAdapter extends BaseAdapter {
 		// holder.name.setText(getItem(position).user.getName());
 
 		try {
-			// holder.date.setText(sdf.format(DateUtil.fromISODateString(getItem(position)
-			// .getCreatedAt())));
+			holder.date.setText(sdf.format(DateUtil.fromISODateString(getItem(
+					position).getCreatedAt())));
 		} catch (Exception e) {
 			Log.w(TAG, "", e);
 		}
-		// holder.comment.setText(getItem(position).getComment());
+		holder.comment.setText(getItem(position).getCommentText());
 		return vi;
 	}
 }

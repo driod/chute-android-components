@@ -34,12 +34,13 @@ public class PhotoCommentsActivity extends Activity {
 			.getSimpleName();
 	private ListView listView;
 	private TextView titleView;
-	private EditText comment;
+	private EditText editTextComment;
 	private PhotoCommentsActivityIntentWrapper wrapper;
 	private PhotoCommentsAdapter adapter;
 	private List<CommentModel> commentList;
 	private AlbumModel album = new AlbumModel();
 	private AssetModel asset = new AssetModel();
+	private CommentModel comment = new CommentModel();
 
 	private int commentAddedCount = 0;
 
@@ -59,11 +60,10 @@ public class PhotoCommentsActivity extends Activity {
 		album.setId(wrapper.getAlbumId());
 		asset.setId(wrapper.getAssetId());
 
-		GCComments.get(getApplicationContext(), album, asset,
-				new CommentsCallback()).executeAsync();
+		GCComments.list(getApplicationContext(), album, asset, new CommentsCallback()).executeAsync();
 		titleView.setText(wrapper.getAlbumName());
 
-		comment = (EditText) findViewById(R.id.editTextComment);
+		editTextComment = (EditText) findViewById(R.id.editTextComment);
 		Button save = (Button) findViewById(R.id.buttonSave);
 		save.setOnClickListener(new OnSaveClickListener());
 
@@ -72,17 +72,17 @@ public class PhotoCommentsActivity extends Activity {
 	private final class OnSaveClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			String comment = PhotoCommentsActivity.this.comment.getText()
+			String commentText = PhotoCommentsActivity.this.editTextComment.getText()
 					.toString();
-			if (TextUtils.isEmpty(comment)) {
+			if (TextUtils.isEmpty(commentText)) {
 				Toast.makeText(getApplicationContext(),
 						R.string.toast_enter_comment, Toast.LENGTH_SHORT)
 						.show();
 				return;
 			}
-			GCComments.create(getApplicationContext(), album, asset,
-					new CommentsAddCallback()).executeAsync();
-			PhotoCommentsActivity.this.comment.getText().clear();
+			comment.setCommentText(commentText);
+			GCComments.add(getApplicationContext(), album, asset, comment, new CommentsAddCallback()).executeAsync();
+			PhotoCommentsActivity.this.editTextComment.getText().clear();
 		}
 	}
 

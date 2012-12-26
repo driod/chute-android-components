@@ -25,7 +25,7 @@ public class GalleryListingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.album_list);
 		listView = (ListView) findViewById(R.id.albumList);
-		GCAlbums.all(getApplicationContext(), new AlbumsCallback())
+		GCAlbums.list(getApplicationContext(), new AlbumsCallback())
 				.executeAsync();
 
 	}

@@ -57,7 +57,7 @@ public class GalleryThreadPoolExecutor extends Observable {
 	public GalleryThreadPoolExecutor(final Context context) {
 		threadPool = new ThreadPoolExecutor(poolSize, maxPoolSize,
 				keepAliveTime, TimeUnit.SECONDS, queue);
-		loader = new ImageLoader(context, R.drawable.placeholder_image_large);
+		loader = new ImageLoader(context, R.drawable.transparent_image);
 		loader.setDefaultBitmapSize(GCUtils.pixelsFromDp(context, 320));
 		// loader.setOnlyFromCache(true);
 		fileCache = new FileCache(context);

@@ -70,7 +70,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 			for (int i = 0; i < collection.size(); i++) {
 				final OnMotionEventListenerImplementation motionEventListener = new OnMotionEventListenerImplementation();
 				final ImageZoomView view = new ImageZoomView(getContext());
-				view.setImageResource(R.drawable.placeholder_image_large);
+				view.setImageResource(R.drawable.transparent_image);
 				view.setOnMotionEventListener(motionEventListener);
 				this.addView(view);
 			}
@@ -99,7 +99,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 		index++;
 		super.showNext();
 		getCurrentView().setImageDrawable(
-				getResources().getDrawable(R.drawable.placeholder_image_large));
+				getResources().getDrawable(R.drawable.transparent_image));
 		displayLargePhoto(collection.get(index).getUrl());
 		triggerPhotoChangedCallback();
 

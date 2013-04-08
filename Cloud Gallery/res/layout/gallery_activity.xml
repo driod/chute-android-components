@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/placeholder_image_large" >
+    android:background="@drawable/transparent_image" >
 
     <com.chute.android.gallery.components.GalleryViewFlipper
         android:id="@+id/galleryView"

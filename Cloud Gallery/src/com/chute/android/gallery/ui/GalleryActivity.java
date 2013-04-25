@@ -6,10 +6,6 @@ import android.widget.Toast;
 
 import com.chute.android.gallery.R;
 import com.chute.android.gallery.components.GalleryViewFlipper;
-import com.chute.sdk.api.GCHttpCallback;
-import com.chute.sdk.api.chute.GCChutes;
-import com.chute.sdk.collections.GCAssetCollection;
-import com.chute.sdk.model.GCHttpRequestParameters;
 
 public class GalleryActivity extends Activity {
 
@@ -22,30 +18,30 @@ public class GalleryActivity extends Activity {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.gallery_activity);
 	galleryView = (GalleryViewFlipper) findViewById(R.id.galleryView);
-	GCChutes.Resources.assets(getApplicationContext(), chuteId,
-		new GCHttpCallback<GCAssetCollection>() {
-
-		    @Override
-		    public void onSuccess(GCAssetCollection responseData) {
-			galleryView.setAssetCollection(responseData);
-		    }
-
-		    @Override
-		    public void onParserException(int responseCode, Throwable exception) {
-		    	Toast.makeText(getApplicationContext(), R.string.parsing_exception, Toast.LENGTH_SHORT).show();
-
-		    }
-
-		    @Override
-		    public void onHttpException(GCHttpRequestParameters params, Throwable exception) {
-		    	Toast.makeText(getApplicationContext(), R.string.http_exception, Toast.LENGTH_SHORT).show();
-		    }
-
-		    @Override
-		    public void onHttpError(int responseCode, String statusMessage) {
-		    	Toast.makeText(getApplicationContext(), R.string.http_error, Toast.LENGTH_SHORT).show();
-		    }
-		}).executeAsync();
+//	GCChutes.Resources.assets(getApplicationContext(), chuteId,
+//		new GCHttpCallback<GCAssetCollection>() {
+//
+//		    @Override
+//		    public void onSuccess(GCAssetCollection responseData) {
+//			galleryView.setAssetCollection(responseData);
+//		    }
+//
+//		    @Override
+//		    public void onParserException(int responseCode, Throwable exception) {
+//		    	Toast.makeText(getApplicationContext(), R.string.parsing_exception, Toast.LENGTH_SHORT).show();
+//
+//		    }
+//
+//		    @Override
+//		    public void onHttpException(GCHttpRequestParameters params, Throwable exception) {
+//		    	Toast.makeText(getApplicationContext(), R.string.http_exception, Toast.LENGTH_SHORT).show();
+//		    }
+//
+//		    @Override
+//		    public void onHttpError(int responseCode, String statusMessage) {
+//		    	Toast.makeText(getApplicationContext(), R.string.http_error, Toast.LENGTH_SHORT).show();
+//		    }
+//		}).executeAsync();
     }
 
     @Override

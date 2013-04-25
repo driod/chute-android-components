@@ -17,11 +17,11 @@ import android.util.Log;
 
 import com.chute.android.gallery.R;
 import com.chute.sdk.utils.GCUtils;
+
 import com.darko.imagedownloader.BlockingFilterInputStream;
 import com.darko.imagedownloader.ContentURLStreamHandlerFactory;
 import com.darko.imagedownloader.FileCache;
 import com.darko.imagedownloader.ImageLoader;
-import com.darko.imagedownloader.Utils;
 
 public class GalleryThreadPoolExecutor extends Observable {
 
@@ -116,7 +116,7 @@ public class GalleryThreadPoolExecutor extends Observable {
 
 		public void downloadFile(final File f, final String url)
 				throws MalformedURLException, IOException {
-			final String protocol = Utils.getProtocol(url);
+			final String protocol = com.darko.imagedownloader.Utils.getProtocol(url);
 			final URLStreamHandler streamHandler = streamFactory
 					.createURLStreamHandler(protocol);
 

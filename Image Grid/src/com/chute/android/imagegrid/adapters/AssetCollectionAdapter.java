@@ -1,6 +1,7 @@
 package com.chute.android.imagegrid.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import com.chute.sdk.collections.GCAssetCollection;
 import com.chute.sdk.model.GCAssetModel;
 import com.chute.sdk.utils.GCUtils;
 import com.darko.imagedownloader.ImageLoader;
+import com.darko.imagedownloader.ImageLoaderListener;
 
-public class AssetCollectionAdapter extends BaseAdapter {
+public class AssetCollectionAdapter extends BaseAdapter implements
+		ImageLoaderListener {
 
 	@SuppressWarnings("unused")
 	private static final String TAG = AssetCollectionAdapter.class
@@ -63,8 +66,21 @@ public class AssetCollectionAdapter extends BaseAdapter {
 			holder = (ViewHolder) vi.getTag();
 		}
 		imageLoader.displayImage(GCUtils.getCustomSizePhotoURL(
-				collection.get(position).getUrl(), 100, 100), holder.image);
+				collection.get(position).getUrl(), 100, 100), holder.image,
+				this);
 		return vi;
+	}
+
+	@Override
+	public void onImageLoadingComplete(String url, Bitmap bitmap) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onImageLoadingError() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

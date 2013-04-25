@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,12 +18,14 @@ import com.chute.android.gallery.zoom.PinchZoomListener.OnMotionEventListener;
 import com.chute.sdk.collections.GCAssetCollection;
 import com.chute.sdk.model.GCAssetModel;
 import com.chute.sdk.utils.GCUtils;
+import com.darko.imagedownloader.ImageLoaderListener;
 
 /**
  * @author DArkO.Grozdanovski
  * 
  */
-public class GalleryViewFlipper extends AnimatedSwitcher {
+public class GalleryViewFlipper extends AnimatedSwitcher implements
+		ImageLoaderListener {
 
 	public static final String TAG = GalleryViewFlipper.class.getSimpleName();
 	private int index;
@@ -141,7 +144,7 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 	}
 
 	public void displayCurrentPhoto(String url) {
-		executor.getLoader().displayImage(url, getCurrentView());
+		executor.getLoader().displayImage(url, getCurrentView(), this);
 	}
 
 	public boolean isCurrentlySelectedPhoto(String url) {
@@ -212,6 +215,18 @@ public class GalleryViewFlipper extends AnimatedSwitcher {
 
 			}
 		}
+	}
+
+	@Override
+	public void onImageLoadingComplete(String url, Bitmap bitmap) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onImageLoadingError() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
